@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roll the device</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body onload="rollTheDice1('http://localhost:8083/api/v1/diceValue')">
+<div class="wrapper">
+    <h1></h1>
+    <div class="dice-area">
+        <p>
+            User1
+            <!--hier gehört ein APICall hin-->
+        </p>
+        <img src="" alt="">
+    </div>
+    <div class="dice-area">
+        <p>
+            User2
+            <!--hier gehört ein APICall hin-->
+        </p>
+        <img src="" alt="">
+    </div>
+    <div>
+        <input class="buttons" type="button" value="roll the dice" onclick="rollTheDice1('http://localhost:8083/api/v1/diceValue');">
+    </div>
+</div>
+<div class="chat">
+    <iframe id="chatFrame" src="http://localhost:8081" title="chat"></iframe>
+</div>
+
+<script src="script.js" charset="UTF-8">
+
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+POST http://localhost:8081/api/v1/
+Content-Type: application/json
+
+{
+  "email":"al@gmail.com",
+  "password": "Test12345-"
+}
+
+
+###
+
+GET http://localhost:8081/api/v1/users
+###
+GET http://localhost:8083/api/v1/diceValue
