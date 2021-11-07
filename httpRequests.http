@@ -6,9 +6,26 @@ Content-Type: application/json
   "password": "Test12345-"
 }
 
+###
+GET http://localhost:8083/api/v1/createuser
+###
+POST http://localhost:8083/api/v1/newSession
+Content-Type: application/json
+
+{
+  "id": "55ffe178-c544-4a17-9b7b-6f87cff9754c",
+  "firstname": "ale",
+  "lastname": "laneri",
+  "email": "bla@gmail",
+  "password": "test12345",
+  "username": "magno"
+}
 
 ###
 
 GET http://localhost:8081/api/v1/users
 ###
 GET http://localhost:8083/api/v1/diceValue
+
+###
+GET http://localhost:8083/api/v1/searchSession

@@ -13,47 +13,71 @@ import java.util.*;
 @Service
 public class SessionService {
 
-    Map<UUID, Session>sessions = new HashMap<>();
-    ArrayList<Session> sessions2 = new ArrayList<>();
+    ArrayList<Session> sessions = new ArrayList<>();
 
     @Autowired
     public SessionService( ) {
-
+        User demoUser1 = new User("alf", "Müller", "bla@gmail","test12345","magno");
+        User demoUser2 = new User("Peter", "Grimm", "blub@gmail","12345test","magno");
+        createNewSession(demoUser1);
+        createNewSession(demoUser2);
     }
 
 
-    Session createNewSession(User user1){
+   public Session createNewSession(User user1){
         Session session = new Session(user1);
-        sessions.put(session.getSessionId(), session);
-        sessions2.add(session);
+        sessions.add(session);
         return session;
     }
 
     void deleteSession(Session session){
-        sessions.remove(session.getSessionId());
+        for(int i = 0; i < sessions.size(); i++){
+            if(session.getSessionId() == sessions.get(i).getSessionId()){
+                sessions.remove(i);
+            }
+        }
     }
 
     Session getSession(UUID sessionId){
-        Session session = sessions.get(sessionId);
-        return session;
+        for(int i = 0; i < sessions.size(); i++) {
+            if(sessions.get(i).getSessionId() == sessionId){
+                return sessions.get(i);
+            }
+        }
+        return null;
     }
 
     //Diese Methode soll verwendet werden um der Session einen zweiten Spieler hinzuzufügen
     void editSession(UUID sessionId, User user){
-        sessions.get(sessionId).setUser2(user);
+        Session session = getSession(sessionId);
+        session.setUser2(user);
     }
 
     void exitSession(UUID sessionId, User user){
-        if(sessions.get(sessionId).getUser1() == user){
-            sessions.get(sessionId).setUser1(null);
+        if(getSession(sessionId).getUser1() == user){
+            getSession(sessionId).setUser1(null);
+        }
+        else if(getSession(sessionId).getUser2() == user){
+            getSession(sessionId).setUser2(null);
         }
         else{
-            sessions.get(sessionId).setUser2(null);
+            System.out.println("no user found");
         }
     }
 
-    void searchSession(){
+    //evt nicht ganz richtig richtig nachvollziehen ob nicht direkt null zurück gegeben wird.
+    public UUID searchSession(){
+        int sessionsSize = sessions.size();
+        for(int i = 0; i < sessionsSize; i++){
+            if(sessions.get(i).isWaitingForParticipant()){
+                return sessions.get(i).getSessionId();
+            }
+        }
+        return null;
+    }
 
+    public ArrayList<Session> getSessions(){
+        return this.sessions;
     }
 
 }
