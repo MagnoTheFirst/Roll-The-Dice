@@ -31,4 +31,13 @@ public class SessionObjectController {
         return new ResponseEntity<>(session, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("api/v1/{sessionId}")
+    public ResponseEntity<Session> getSessionSide(@PathVariable UUID sessionId)
+    {
+        Session session = sessionService.getSession(sessionId);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ session.getSessionId());
+        return new ResponseEntity<>(session, HttpStatus.OK);
+    }
+
 }

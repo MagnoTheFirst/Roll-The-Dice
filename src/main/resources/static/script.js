@@ -60,4 +60,10 @@ function rollTheDice1(url){
         document.querySelector('h1').innerHTML = "It's a draw";
     }
 
+    function getSession(url){
+        var resp1 = httpGet(url);
+    }
+
 }
+
+
