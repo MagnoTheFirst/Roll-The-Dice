@@ -3,7 +3,9 @@ package ch.webe.rollthedice.webeproject.controller;
 import ch.webe.rollthedice.webeproject.model.Session;
 import ch.webe.rollthedice.webeproject.model.User;
 import ch.webe.rollthedice.webeproject.services.SessionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,7 @@ public class SessionController {
 
     private final SessionService sessionService;
 
+    @Autowired
     SessionController(SessionService sessionService){
         this.sessionService = sessionService;
     }
@@ -40,6 +43,7 @@ public class SessionController {
     }
 
     //---------------------------OK----------------------------------------
+    //Kann ergänzt werden um einen User auf der DB zu erstellen
     @CrossOrigin(origins = "*")
     @GetMapping("api/v1/createuser")
     public ResponseEntity<User> createUser()
@@ -61,17 +65,6 @@ public class SessionController {
     }
 
     //----------------------------------NOK-----------------------------------
-    //TODO[] muss richtig gestellt werden
-    //Diese Api wird nach jedem Spielzug angewählt um zu prüfen ob beide Spieler noch online sind und um den Spielstand auszuwerten
-    //Hierfür muss die Session Id in der URL eingebaut werden.
-    @CrossOrigin(origins = "*")
-    @GetMapping("api/v1/sessionInfo/{sessionId}")
-    public String getSessionInformation(@PathVariable("sessionId") UUID sessionId)
-    {
-        return "GameSession";
-    }
-
-
 
 
 

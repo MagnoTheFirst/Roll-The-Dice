@@ -38,13 +38,16 @@ public class SessionService {
         }
     }
 
-    Session getSession(UUID sessionId){
+    public Session getSession(UUID sessionId){
+        Session session = null;
         for(int i = 0; i < sessions.size(); i++) {
-            if(sessions.get(i).getSessionId() == sessionId){
-                return sessions.get(i);
+            System.out.println(sessions.get(i).getSessionId());
+            if(sessions.get(i).getSessionId().compareTo(sessionId) == -1){
+                session = sessions.get(i);
+                System.out.println("--------------------"+ session.getSessionId());
             }
         }
-        return null;
+        return session;
     }
 
     //Diese Methode soll verwendet werden um der Session einen zweiten Spieler hinzuzufügen
