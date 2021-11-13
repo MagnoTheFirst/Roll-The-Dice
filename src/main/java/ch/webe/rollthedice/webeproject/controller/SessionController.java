@@ -66,7 +66,26 @@ public class SessionController {
 
     //----------------------------------NOK-----------------------------------
 
+    //muss angepasst werden
+    @CrossOrigin(origins = "*")
+    @GetMapping("api/v1/{sessionId}/scoreUser1")
+    public ResponseEntity<UUID> getScoreUser1(@PathVariable UUID sessionId){
 
+        return new ResponseEntity<UUID>(sessionService.searchSession(), HttpStatus.OK);
+    }
 
+    //muss angepasst werden.
+    @CrossOrigin(origins = "*")
+    @GetMapping("api/v1/{sessionId}/scoreUser2")
+    public ResponseEntity<UUID> getScoreUser2(@PathVariable UUID sessionId){
 
+        return new ResponseEntity<UUID>(sessionService.searchSession(), HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("api/v1/searchSession2")
+    public ResponseEntity<Session> searchSession2(@RequestBody User user){
+        Session session = sessionService.searchSession2(user);
+        return new ResponseEntity<Session>(session, HttpStatus.OK);
+    }
 }

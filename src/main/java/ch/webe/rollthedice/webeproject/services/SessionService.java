@@ -42,7 +42,7 @@ public class SessionService {
         Session session = null;
         for(int i = 0; i < sessions.size(); i++) {
             System.out.println(sessions.get(i).getSessionId());
-            if(sessions.get(i).getSessionId().compareTo(sessionId) == -1){
+            if(sessions.get(i).getSessionId().equals(sessionId)){
                 session = sessions.get(i);
                 System.out.println("--------------------"+ session.getSessionId());
             }
@@ -74,6 +74,22 @@ public class SessionService {
         for(int i = 0; i < sessionsSize; i++){
             if(sessions.get(i).isWaitingForParticipant()){
                 return sessions.get(i).getSessionId();
+            }
+        }
+        return null;
+    }
+
+    //evt nicht ganz richtig richtig nachvollziehen ob nicht direkt null zurück gegeben wird.
+    public Session searchSession2(User user){
+        int sessionsSize = sessions.size();
+        for(int i = 0; i < sessionsSize; i++){
+            if(sessions.get(i).isWaitingForParticipant()){
+                sessions.get(i).setUser2(user);
+                sessions.get(i).setWaitingForParticipant(false);
+                return sessions.get(i);
+            }
+            else{
+                return createNewSession(user);
             }
         }
         return null;

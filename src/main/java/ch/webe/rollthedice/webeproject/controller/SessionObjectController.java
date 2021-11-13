@@ -1,7 +1,6 @@
 package ch.webe.rollthedice.webeproject.controller;
 
 import ch.webe.rollthedice.webeproject.model.Session;
-import ch.webe.rollthedice.webeproject.model.User;
 import ch.webe.rollthedice.webeproject.services.SessionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +30,5 @@ public class SessionObjectController {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ session.getSessionId());
         return new ResponseEntity<>(session, HttpStatus.OK);
     }
-
 
 }
