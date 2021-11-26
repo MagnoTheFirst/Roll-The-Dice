@@ -5,6 +5,7 @@ import ch.webe.rollthedice.webeproject.services.SessionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,12 +33,20 @@ public class SessionObjectController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("api/v1/{sessionId}")
+    @GetMapping("api/v1/session/{sessionId}")
     public ResponseEntity<Session> getSessionSide(@PathVariable UUID sessionId)
     {
         Session session = sessionService.getSession(sessionId);
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ session.getSessionId());
         return new ResponseEntity<>(session, HttpStatus.OK);
+    }
+
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("api/v1/session23/{sessionId}")
+    public String getHTML(@PathVariable UUID sessionId, Model model)
+    {
+        return "rollTheDice";
     }
 
 }

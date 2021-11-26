@@ -48,9 +48,17 @@ public class GameController {
     @CrossOrigin(origins = "*")
     @GetMapping("api/v1/rollTheDice")
     public String rollTheDice(){
-        return "roll-the-dice";
+        return "rollTheDice";
     }
 
+
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("api/v1/rollTheDice/{sessionId}")
+    public String rollTheDice2(@PathVariable UUID sessionId){
+        sessionService.getSession(sessionId);
+        return new String("rollTheDice");
+    }
 //------------------------------------Neuer Abschnitt bis hier funktioniert alles ------------------------
 
 

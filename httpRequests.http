@@ -32,7 +32,7 @@ GET http://localhost:8083/api/v1/searchSession
 
 ###
 
-GET http://localhost:8083/api/v1/000c0efd-2322-4435-b66b-b67c258379e0
+GET http://localhost:8083/api/v1/session/000c0efd-2322-4435-b66b-b67c258379e0
 
 ###
 POST http://localhost:8083/api/v1/searchSession2
@@ -40,9 +40,23 @@ Content-Type: application/json
 
 {
   "id": "55ffe178-c544-4a17-9b7b-6f87cff9754c",
-  "firstname": "ale",
-  "lastname": "laneri",
+  "firstname": "tomas",
+  "lastname": "pransky",
   "email": "bla@gmail",
   "password": "test12345",
-  "username": "magno"
+  "username": "albert"
+}
+
+###
+
+POST http://localhost:8083/api/v1/session/703834b3-160c-42d8-a9a9-1aef25211b62
+Content-Type: application/json
+
+{
+  "id": "55ffe178-c544-4a17-9b7b-6f87cff9754c",
+  "firstname": "tomas",
+  "lastname": "pransky",
+  "email": "bgbgbgbgb@gmail",
+  "password": "1111122222222bbbbbb",
+  "username": "shokomuus"
 }

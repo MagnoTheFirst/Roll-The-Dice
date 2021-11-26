@@ -12,6 +12,7 @@ public class Session {
     boolean waitingForParticipant;
     boolean user1Turn;
     Integer roundCounter;
+    Score score;
 
     public Session(User user1) {
         this.sessionId = UUID.randomUUID();
@@ -20,6 +21,7 @@ public class Session {
         this.waitingForParticipant = true;
         this.user1Turn = true;
         this.roundCounter = 0;
+        this.score = new Score();
     }
 
     public UUID getSessionId() {
@@ -39,6 +41,7 @@ public class Session {
     }
 
     public void setUser2(User user2) {
+        this.waitingForParticipant = false;
         this.user2 = user2;
     }
 

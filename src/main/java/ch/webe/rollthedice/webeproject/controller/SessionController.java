@@ -59,28 +59,35 @@ public class SessionController {
     //soll angewählt werden um eine Session zu suchen falls null returnt wird dann wähle create session an
     @CrossOrigin(origins = "*")
     @GetMapping("api/v1/searchSession")
-    public ResponseEntity<UUID> searchSession(){
+    public ResponseEntity<Session> searchSession(){
 
-        return new ResponseEntity<UUID>(sessionService.searchSession(), HttpStatus.OK);
+        return new ResponseEntity<Session>(sessionService.searchSession(), HttpStatus.OK);
     }
 
+    //soll angewählt werden um eine Session zu suchen falls null returnt wird dann wähle create session an
+    @CrossOrigin(origins = "*")
+    @GetMapping("api/v1/sessionId/{sessionId}")
+    public ResponseEntity<Session> getSession(@PathVariable UUID sessionId){
+
+        return new ResponseEntity<Session>(sessionService.getSession(sessionId), HttpStatus.OK);
+    }
     //----------------------------------NOK-----------------------------------
 
     //muss angepasst werden
     @CrossOrigin(origins = "*")
     @GetMapping("api/v1/{sessionId}/scoreUser1")
-    public ResponseEntity<UUID> getScoreUser1(@PathVariable UUID sessionId){
+    public ResponseEntity<Session> getScoreUser1(@PathVariable UUID sessionId){
 
-        return new ResponseEntity<UUID>(sessionService.searchSession(), HttpStatus.OK);
+        return new ResponseEntity<Session>(sessionService.getSession(sessionId), HttpStatus.OK);
     }
 
     //muss angepasst werden.
-    @CrossOrigin(origins = "*")
-    @GetMapping("api/v1/{sessionId}/scoreUser2")
-    public ResponseEntity<UUID> getScoreUser2(@PathVariable UUID sessionId){
+ //   @CrossOrigin(origins = "*")
+   // @GetMapping("api/v1/{sessionId}/scoreUser2")
+    //public ResponseEntity<UUID> getScoreUser2(@PathVariable UUID sessionId){
 
-        return new ResponseEntity<UUID>(sessionService.searchSession(), HttpStatus.OK);
-    }
+      //  return new ResponseEntity<UUID>(sessionService.searchSession(), HttpStatus.OK);
+    //}
 
     @CrossOrigin(origins = "*")
     @PostMapping("api/v1/searchSession2")
@@ -88,4 +95,6 @@ public class SessionController {
         Session session = sessionService.searchSession2(user);
         return new ResponseEntity<Session>(session, HttpStatus.OK);
     }
+
+
 }

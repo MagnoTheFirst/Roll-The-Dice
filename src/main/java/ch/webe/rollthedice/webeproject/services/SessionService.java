@@ -18,9 +18,11 @@ public class SessionService {
     @Autowired
     public SessionService( ) {
         User demoUser1 = new User("alf", "Müller", "bla@gmail","test12345","magno");
-        User demoUser2 = new User("Peter", "Grimm", "blub@gmail","12345test","magno");
+        User demoUser2 = new User("Peter", "Grimm", "blub@gmail","12345test","alfred");
+        User demoUser3 = new User("Jessi", "lüthi", "pipapo@bluewin.ch","aaaaa11111bbbbb","jessiro");
         createNewSession(demoUser1);
         createNewSession(demoUser2);
+        sessions.get(1).setUser2(demoUser3);
     }
 
 
@@ -69,11 +71,11 @@ public class SessionService {
     }
 
     //evt nicht ganz richtig richtig nachvollziehen ob nicht direkt null zurück gegeben wird.
-    public UUID searchSession(){
+    public Session searchSession(){
         int sessionsSize = sessions.size();
         for(int i = 0; i < sessionsSize; i++){
             if(sessions.get(i).isWaitingForParticipant()){
-                return sessions.get(i).getSessionId();
+                return sessions.get(i);
             }
         }
         return null;
