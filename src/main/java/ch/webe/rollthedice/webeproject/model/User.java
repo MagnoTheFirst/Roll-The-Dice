@@ -13,6 +13,9 @@ public class User {
     private String password;
     String username;
 
+    //ID delivered by authentication service
+    Long externalId;
+
     public User(String firstname, String lastname, String email, String password, String username) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -25,6 +28,25 @@ public class User {
     public User(String username) {
         this.username = username;
         this.id = UUID.randomUUID();
+    }
+
+    //Contructor for Authentication Service
+    public User(String firstname, String lastname, String email, Long id ){
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+    }
+
+
+    //Contructor for Authentication Service
+    public User(String firstname, String lastname, String email){
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+    }
+
+    public User(){
+
     }
 
     public String getFirstname() {

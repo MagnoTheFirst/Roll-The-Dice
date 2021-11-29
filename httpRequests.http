@@ -60,3 +60,7 @@ Content-Type: application/json
   "password": "1111122222222bbbbbb",
   "username": "shokomuus"
 }
+
+###
+
+GET http://localhost:8081/websocket/
