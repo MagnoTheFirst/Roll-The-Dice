@@ -16,6 +16,7 @@ var colors = [
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
+
 function connect1() {
     username = document.getElementById("email").textContent;
 

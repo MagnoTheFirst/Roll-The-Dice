@@ -5,10 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <title>User Lobby</title>
-   <!-- <link th:href="@{/css/main.css}" rel="stylesheet" /> -->
+    <link th:href="@{/css/chatstyle.css}" rel="stylesheet" />
 </head>
 
-<body th:action="@{/account1}" th:object="${user}" onload="connect1()" >
+<body th:action="@{/account1}" th:object="${user}" onload="connect1(), getSessions()" >
     <h1 class="hidden">Roll the Dice </h1>
     <h2 id="welcome" th:text="'Hallo '+ ${user.firstname} + ' ' + ${user.lastname}"></h2>
     <p id="email" th:text="${user.email}" class="hidden" >
@@ -17,8 +17,12 @@
     <noscript>
         <h2>Scheint als ob der Browser kein JavaScript supported</h2>
     </noscript>
-    <div id="game-frame" class="hidden">
-        <p>test</p>
+    <div id="table">
+        <h3> Sessions:</h3>
+        <div></div>
+    </div>
+
+        </div>
     </div>
     <div id="chat-container">
         <div id="chat-page" class="hidden">
@@ -44,6 +48,7 @@
     </div>
     <script type="text/javascript" th:src="@{/js/chat-logic.js}"></script>
 
+    <script type="text/javascript" th:src="@{/js/session-handling.js}"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
 

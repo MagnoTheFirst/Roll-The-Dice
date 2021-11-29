@@ -34,8 +34,6 @@ function connect(event) {
     username = document.getElementById("email").textContent;
 
     if(username) {
-        usernamePage.classList.add('hidden');
-        chatPage.classList.remove('hidden');
 
         var socket = new SockJS('/websocket');
         stompClient = Stomp.over(socket);
@@ -56,7 +54,6 @@ function onConnected() {
         JSON.stringify({sender: username, type: 'JOIN'})
     )
 
-    connectingElement.classList.add('hidden');
 }
 
 

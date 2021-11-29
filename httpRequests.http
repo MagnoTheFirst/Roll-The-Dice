@@ -39,12 +39,12 @@ POST http://localhost:8083/api/v1/searchSession2
 Content-Type: application/json
 
 {
-  "id": "55ffe178-c544-4a17-9b7b-6f87cff9754c",
-  "firstname": "tomas",
-  "lastname": "pransky",
+  "id": null,
+  "firstname": "ale",
+  "lastname": "laneri",
   "email": "bla@gmail",
   "password": "test12345",
-  "username": "albert"
+  "username": "magno"
 }
 
 ###
@@ -63,4 +63,21 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8081/websocket/
+GET http://localhost:8083/account/alejandro.r.laneri@gmail.com
+
+###
+POST http://localhost:8083/api/v1/searchSession3
+Content-Type: application/json
+
+{
+  "id": 1,
+  "firstname": "Alejandro",
+  "lastname": "Laneri",
+  "email": "alejandro.r.laneri@gmail.com",
+  "password": "$2a$10$.WNat6KjIoO4O.OL0gUBROw7l7hJ8YuiPMkhw2diSXwlIvYDPo4ZC",
+  "username": null
+}
+
+###
+
+GET http://localhost:8083/api/v1/sessions

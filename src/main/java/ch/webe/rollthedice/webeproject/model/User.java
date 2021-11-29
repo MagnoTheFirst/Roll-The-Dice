@@ -22,12 +22,10 @@ public class User {
         this.email = email;
         this.password = password;
         this.username = username;
-        this.id = UUID.randomUUID();
     }
 
     public User(String username) {
         this.username = username;
-        this.id = UUID.randomUUID();
     }
 
     //Contructor for Authentication Service

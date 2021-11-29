@@ -26,7 +26,9 @@
     }
 }*/
 
-
+function hitTheSpot(){
+    alert("show");
+}
 function httpGet(theUrl)
 {
     var xmlHttp = new XMLHttpRequest();

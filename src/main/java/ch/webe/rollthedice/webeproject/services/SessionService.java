@@ -1,10 +1,13 @@
 package ch.webe.rollthedice.webeproject.services;
 
+import ch.webe.rollthedice.webeproject.model.AppUser;
 import ch.webe.rollthedice.webeproject.model.Dice;
 import ch.webe.rollthedice.webeproject.model.Session;
 import ch.webe.rollthedice.webeproject.model.User;
 import ch.webe.rollthedice.webeproject.repos.SessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -14,19 +17,31 @@ import java.util.*;
 public class SessionService {
 
     ArrayList<Session> sessions = new ArrayList<>();
+    ArrayList<Session> sessions2 = new ArrayList<>();
 
     @Autowired
     public SessionService( ) {
         User demoUser1 = new User("alf", "Müller", "bla@gmail","test12345","magno");
         User demoUser2 = new User("Peter", "Grimm", "blub@gmail","12345test","alfred");
         User demoUser3 = new User("Jessi", "lüthi", "pipapo@bluewin.ch","aaaaa11111bbbbb","jessiro");
+        AppUser demoUser4 = new AppUser("Alejandro", "Laneri", "pipapo@bluewin.ch");
+        AppUser demoUser5 = new AppUser("Angelo", "Merte", "papipo@bluewin.ch");
+
         createNewSession(demoUser1);
         createNewSession(demoUser2);
+
+
         sessions.get(1).setUser2(demoUser3);
     }
 
 
    public Session createNewSession(User user1){
+        Session session = new Session(user1);
+        sessions.add(session);
+        return session;
+    }
+
+    public Session createNewSession1(AppUser user1){
         Session session = new Session(user1);
         sessions.add(session);
         return session;
@@ -97,7 +112,25 @@ public class SessionService {
         return null;
     }
 
+    public Session searchSession3(AppUser user){
+        int sessionsSize = sessions2.size();
+        for(int i = 0; i < sessionsSize; i++){
+            if(sessions2.get(i).isWaitingForParticipant()){
+                sessions2.get(i).setAppUser2(user);
+                sessions2.get(i).setWaitingForParticipant(false);
+                return sessions2.get(i);
+            }
+            else{
+                return createNewSession1(user);
+            }
+        }
+        return null;
+    }
     public ArrayList<Session> getSessions(){
+        return this.sessions;
+    }
+
+    public List<Session> getSessions1(){
         return this.sessions;
     }
 

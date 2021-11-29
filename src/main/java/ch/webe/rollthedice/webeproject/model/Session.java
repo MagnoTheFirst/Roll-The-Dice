@@ -7,6 +7,8 @@ import java.util.UUID;
 public class Session {
 
     UUID sessionId;
+    AppUser appUser1;
+    AppUser appUser2;
     User user1;
     User user2;
     boolean waitingForParticipant;
@@ -18,6 +20,36 @@ public class Session {
         this.sessionId = UUID.randomUUID();
         this.user1 = user1;
         this.user2 = null;
+        this.waitingForParticipant = true;
+        this.user1Turn = true;
+        this.roundCounter = 0;
+        this.score = new Score();
+    }
+
+    public void setSessionId(UUID sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public AppUser getAppUser1() {
+        return appUser1;
+    }
+
+    public void setAppUser1(AppUser appUser1) {
+        this.appUser1 = appUser1;
+    }
+
+    public AppUser getAppUser2() {
+        return appUser2;
+    }
+
+    public void setAppUser2(AppUser appUser2) {
+        this.appUser2 = appUser2;
+    }
+
+    public Session(AppUser user1) {
+        this.sessionId = UUID.randomUUID();
+        this.appUser1 = user1;
+        this.appUser2 = null;
         this.waitingForParticipant = true;
         this.user1Turn = true;
         this.roundCounter = 0;

@@ -1,5 +1,6 @@
 package ch.webe.rollthedice.webeproject.controller;
 
+import ch.webe.rollthedice.webeproject.model.AppUser;
 import ch.webe.rollthedice.webeproject.model.Session;
 import ch.webe.rollthedice.webeproject.model.User;
 import ch.webe.rollthedice.webeproject.services.SessionService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,6 +33,7 @@ public class SessionController {
     {
         return sessionService.getSessions();
     }
+
 
     //---------------------------OK----------------------------------------
 
@@ -96,5 +99,11 @@ public class SessionController {
         return new ResponseEntity<Session>(session, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping("api/v1/searchSession3")
+    public ResponseEntity<Session> searchSession3(@RequestBody AppUser user){
+        Session session = sessionService.searchSession3(user);
+        return new ResponseEntity<Session>(session, HttpStatus.OK);
+    }
 
 }
