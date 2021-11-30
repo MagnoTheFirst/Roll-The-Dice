@@ -2,6 +2,7 @@ package ch.webe.rollthedice.webeproject.controller;
 
 import ch.webe.rollthedice.webeproject.model.AppUser;
 import ch.webe.rollthedice.webeproject.model.Dice;
+import ch.webe.rollthedice.webeproject.model.Session;
 import ch.webe.rollthedice.webeproject.model.User;
 import ch.webe.rollthedice.webeproject.services.AppUserService;
 import ch.webe.rollthedice.webeproject.services.DiceService;
@@ -21,6 +22,7 @@ public class UserSessionController {
 
     User user;
     AppUserService appUserService;
+
 
     @Autowired
     public UserSessionController(AppUserService appUserService){
@@ -73,6 +75,5 @@ public class UserSessionController {
 
         return appUserService.getByEmail(email);
     }
-
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -23,6 +24,8 @@ public class GameController {
     private final DiceService diceService;
 
     private Dice dice;
+
+    Session currentSession;
 
     public GameController(DiceService diceService, SessionService sessionService) {
 
@@ -51,28 +54,22 @@ public class GameController {
         return "rollTheDice";
     }
 
-
+    @GetMapping("/api/v1/session/currentSession")
+    public ResponseEntity<Session> getCurrentSession(){
+        Session current = this.currentSession;
+        System.out.println(current.getUser2().getFirstname() + " getCurrentSession");
+        return new ResponseEntity<Session>(current, HttpStatus.OK);
+    }
 
     @CrossOrigin(origins = "*")
     @GetMapping("api/v1/rollTheDice/{sessionId}")
     public String rollTheDice2(@PathVariable UUID sessionId, Model model){
         model.addAttribute("session", sessionService.getSession(sessionId));
-        System.out.println("++++++++++++++++"+ sessionId);
+        this.currentSession = sessionService.getSession(sessionId);
+        System.out.println("++++++++++++++++"+ sessionId + "rollTheDice2");
         sessionService.getSession(sessionId);
         return new String("rollTheDice");
     }
 //------------------------------------Neuer Abschnitt bis hier funktioniert alles ------------------------
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

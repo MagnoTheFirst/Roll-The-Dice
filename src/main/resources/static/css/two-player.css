@@ -10,7 +10,18 @@ body {
 
 h1 {
     margin: 20px;
-    font-size: 6rem;
+    color: #bdae06;
+    border-color: #333333;
+    border-width: 5px;
+    font-size: 4rem;
+    font-family: sans-serif;
+
+}
+
+h2 {
+    margin: 20px;
+    font-size: 2rem;
+    font-family: sans-serif;
     color: rgb(208, 214, 218);
 }
 
@@ -32,7 +43,8 @@ p {
 }
 
 img {
-    width: 320px;
+    height: 160px;
+    width: 160px;
 }
 
 .img2 {
@@ -46,7 +58,7 @@ img {
 
 #chatFrame {
     width: 50%;
-    height: 50em;
+    height: 25em;
 }
 
 .chat {

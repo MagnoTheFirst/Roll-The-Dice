@@ -6,29 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roll the device</title>
-    <link th:href="@{/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/two-player.css}" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body onload="rollTheDice2('http://localhost:8083/api/v1/diceValue'), getSession(), playerInfo()">
+<body onload="rollTheDice3('http://localhost:8083/api/v1/diceValue'), getSession(), playerInfo()">
 <div class="wrapper">
-    <h1></h1>
-    <div class="dice-area">
+    <h1>Roll The Dice</h1>
+    <h2></h2>
+    <div class="dice-area2">
         <p id="user1">
             User1
             <!--hier gehört ein APICall hin-->
         </p>
         <img src="" alt="">
+        <img src="" alt="">
     </div>
-    <div class="dice-area">
+    <div class="dice-area2">
         <p id="user2">
             User2
             <!--hier gehört ein APICall hin-->
         </p>
         <img src="" alt="">
+        <img src="" alt="">
     </div>
     <div>
-        <input class="buttons" type="button" value="roll the dice" onclick="rollTheDice2('http://localhost:8083/api/v1/diceValue');">
+        <input class="buttons" type="button" value="roll the dice" onclick="rollTheDice3('http://localhost:8083/api/v1/diceValue');">
     </div>
 </div>
 <div class="chat">

@@ -20,6 +20,8 @@ public class SessionController {
 
     private final SessionService sessionService;
     AppUserService appUserService;
+    AppUser currentUser;
+    ArrayList<Session> activeSessions;
 
     @Autowired
     SessionController(SessionService sessionService, AppUserService appUserService){
@@ -117,6 +119,20 @@ public class SessionController {
         AppUser appUser = appUserService.getByEmail(email).getBody();
         System.out.println(appUser.getEmail());
         User user = new User(appUser.getFirstname(), appUser.getLastname(), appUser.getEmail());
+        Session session = sessionService.getSession(sessionId);
+        session.setUser2(user);
+        sessionService.sessions.set(sessionService.getSessionIndex(), session);
+        return HttpStatus.OK;
+    }
+
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("api/v1/joinSession1/{email}/{sessionId}")
+    public HttpStatus joinSession1(@PathVariable UUID sessionId, @PathVariable String email){
+        System.out.println(sessionService.getSessionIndex());
+        this.currentUser = appUserService.getByEmail(email).getBody();
+        System.out.println("************************" + currentUser.getEmail());
+        User user = new User(currentUser.getFirstname(), currentUser.getLastname(), currentUser.getEmail());
         Session session = sessionService.getSession(sessionId);
         session.setUser2(user);
         sessionService.sessions.set(sessionService.getSessionIndex(), session);

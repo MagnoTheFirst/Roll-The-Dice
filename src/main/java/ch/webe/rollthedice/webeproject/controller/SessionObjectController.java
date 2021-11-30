@@ -28,7 +28,7 @@ public class SessionObjectController {
     public ResponseEntity<Session> getSessionInformation(@PathVariable UUID sessionId)
     {
         Session session = sessionService.getSession(sessionId);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ session.getSessionId());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ session.getSessionId() + "getSessionInformation");
         return new ResponseEntity<>(session, HttpStatus.OK);
     }
 
@@ -37,7 +37,7 @@ public class SessionObjectController {
     public ResponseEntity<Session> getSessionSide(@PathVariable UUID sessionId)
     {
         Session session = sessionService.getSession(sessionId);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ session.getSessionId());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ session.getSessionId() + "getSessionSide");
         return new ResponseEntity<>(session, HttpStatus.OK);
     }
 
