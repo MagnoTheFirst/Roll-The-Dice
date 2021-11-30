@@ -4,6 +4,14 @@ function hitTheSpot(){
 }
 
 
+function postRequest(email, id){
+    var str = 'http://localhost:8083/api/v1/joinSession/'+ email+ '/' + id;
+    alert(str);
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("POST", str , true);
+    xmlHttp.send();
+}
+
 function httpGet(url)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -44,9 +52,16 @@ function getSessions(){
 }
 
 function joinSession(clicked_id){
+    var email = document.getElementById('email').textContent;
+    var userInformation = httpGet('http://localhost:8083/account/'+ email);
 
     var sessionId = document.getElementById(clicked_id).textContent;
     sessionId = sessionId.replace("Session: ", "");
+
+    var sessionData = httpGet('http://localhost:8083/api/v1/session/' + email);
+
+    postRequest(sessionId, email);
+
     alert(sessionId);
     var sessionData = httpGet('http://localhost:8083/api/v1/sessionId/'+ sessionId);
     window.location.href = "http://localhost:8083/api/v1/rollTheDice/" + sessionId;
