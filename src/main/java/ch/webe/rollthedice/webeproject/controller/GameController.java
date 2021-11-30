@@ -55,7 +55,9 @@ public class GameController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("api/v1/rollTheDice/{sessionId}")
-    public String rollTheDice2(@PathVariable UUID sessionId){
+    public String rollTheDice2(@PathVariable UUID sessionId, Model model){
+        model.addAttribute("session", sessionService.getSession(sessionId));
+        System.out.println("++++++++++++++++"+ sessionId);
         sessionService.getSession(sessionId);
         return new String("rollTheDice");
     }

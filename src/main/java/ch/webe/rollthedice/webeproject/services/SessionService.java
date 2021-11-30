@@ -16,8 +16,9 @@ import java.util.*;
 @Service
 public class SessionService {
 
-    ArrayList<Session> sessions = new ArrayList<>();
+    public ArrayList<Session> sessions = new ArrayList<>();
     ArrayList<Session> sessions2 = new ArrayList<>();
+    Integer sessionsCounter = null;
 
     @Autowired
     public SessionService( ) {
@@ -61,12 +62,18 @@ public class SessionService {
             System.out.println(sessions.get(i).getSessionId());
             if(sessions.get(i).getSessionId().equals(sessionId)){
                 session = sessions.get(i);
+                this.sessionsCounter = i;
                 System.out.println("--------------------"+ session.getSessionId());
             }
         }
         return session;
     }
 
+    public Integer getSessionIndex(){
+        Integer counter = this.sessionsCounter;
+        sessionsCounter = null;
+        return counter;
+    }
     //Diese Methode soll verwendet werden um der Session einen zweiten Spieler hinzuzufügen
     void editSession(UUID sessionId, User user){
         Session session = getSession(sessionId);

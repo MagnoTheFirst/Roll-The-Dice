@@ -80,4 +80,29 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8083/api/v1/sessions
+GET http://localhost:8083/api/v1/session/19b293df-247c-4f65-8b6c-a689c8de5003
+
+###
+
+POST http://localhost:8083/api/v1/joinSession/alejandro.r.laneri@gmail.com/8da95130-608c-4769-a2bf-8e257092d614
+Content-Type: application/json
+
+{
+  "id": 1,
+  "firstname": "Gabriel",
+  "lastname": "Batista",
+  "email": "gabriel.batista@outlook.com",
+  "password": "$2a$10$.WNat6KjIoO4O.OL0gUBROw7l7hJ8YuiPMkhw2diSXwlIvYDPo4ZC",
+  "username": "blackrakoon",
+  "appUserRole": "USER",
+  "locked": false,
+  "enabled": true,
+  "accountNonExpired": true,
+  "credentialsNonExpired": true,
+  "accountNonLocked": true,
+  "authorities": [
+    {
+      "authority": "USER"
+    }
+  ]
+}

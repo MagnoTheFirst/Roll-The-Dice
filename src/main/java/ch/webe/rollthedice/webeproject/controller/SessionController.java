@@ -3,6 +3,7 @@ package ch.webe.rollthedice.webeproject.controller;
 import ch.webe.rollthedice.webeproject.model.AppUser;
 import ch.webe.rollthedice.webeproject.model.Session;
 import ch.webe.rollthedice.webeproject.model.User;
+import ch.webe.rollthedice.webeproject.services.AppUserService;
 import ch.webe.rollthedice.webeproject.services.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +19,13 @@ import java.util.UUID;
 public class SessionController {
 
     private final SessionService sessionService;
+    AppUserService appUserService;
 
     @Autowired
-    SessionController(SessionService sessionService){
+    SessionController(SessionService sessionService, AppUserService appUserService){
+
         this.sessionService = sessionService;
+        this.appUserService = appUserService;
     }
 
 
@@ -104,6 +108,19 @@ public class SessionController {
     public ResponseEntity<Session> searchSession3(@RequestBody AppUser user){
         Session session = sessionService.searchSession3(user);
         return new ResponseEntity<Session>(session, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("api/v1/joinSession/{email}/{sessionId}")
+    public HttpStatus joinSession(@PathVariable UUID sessionId, @PathVariable String email){
+        System.out.println(sessionService.getSessionIndex());
+        AppUser appUser = appUserService.getByEmail(email).getBody();
+        System.out.println(appUser.getEmail());
+        User user = new User(appUser.getFirstname(), appUser.getLastname(), appUser.getEmail());
+        Session session = sessionService.getSession(sessionId);
+        session.setUser2(user);
+        sessionService.sessions.set(sessionService.getSessionIndex(), session);
+        return HttpStatus.OK;
     }
 
 }
