@@ -18,6 +18,9 @@
             User1
             <!--hier gehört ein APICall hin-->
         </p>
+        <p id="score-player1">
+            0
+        </p>
         <img src="" alt="">
     </div>
     <div class="dice-area">
@@ -25,10 +28,13 @@
             User2
             <!--hier gehört ein APICall hin-->
         </p>
+        <p id="score-player2">
+            0
+        </p>
         <img src="" alt="">
     </div>
     <div>
-        <input class="buttons" type="button" value="roll the dice" onclick="rollTheDice2('http://localhost:8083/api/v1/diceValue');">
+        <input class="buttons" type="button" value="roll the dice" onclick="rollTheDiceNew(), startTimer();">
     </div>
 </div>
 <div class="chat">

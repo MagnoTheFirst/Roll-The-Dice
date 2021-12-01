@@ -56,6 +56,14 @@ public class Session {
         this.score = new Score();
     }
 
+    public Score getScore(){
+        return this.score;
+    }
+
+    public void setScore(Score score){
+        this.score = score;
+    }
+
     public UUID getSessionId() {
         return sessionId;
     }

@@ -135,6 +135,9 @@ public class SessionController {
         User user = new User(currentUser.getFirstname(), currentUser.getLastname(), currentUser.getEmail());
         Session session = sessionService.getSession(sessionId);
         session.setUser2(user);
+        sessionService.activeSessions.add(session);
+
+        //TODO[] remove session from waiting sessions
         sessionService.sessions.set(sessionService.getSessionIndex(), session);
         return HttpStatus.OK;
     }

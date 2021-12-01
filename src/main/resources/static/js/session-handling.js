@@ -1,10 +1,5 @@
 var session = null;
 
-function hitTheSpot(){
-    alert("show");
-    console.log("Hello World");
-}
-
 function httpGet(url)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -16,7 +11,6 @@ function httpGet(url)
 function getSession(sessionId){
     var session = httpGet('http://localhost:8083/api/v1/session/' + sessionId);
     var data = JSON.parse(session);
-    alert('test');
     return data;
 }
 
@@ -66,17 +60,13 @@ function joinSession(clicked_id){
     var userInformation = httpGet('http://localhost:8083/account/'+ email);
 
     var sessionId = document.getElementById(clicked_id).textContent;
-    alert(sessionId);
     sessionId = sessionId.replace("Session: ", "");
-
 
     var sessionData = httpGet('http://localhost:8083/api/v1/session/' + sessionId);
     var url = 'http://localhost:8083/api/v1/joinSession1/'+ email +'/' + sessionId
-    alert("-------------"+url);
     httpGet(url);
     session = JSON.parse(sessionData);
 
-    alert(sessionId);
     var sessionData = httpGet('http://localhost:8083/api/v1/sessionId/'+ sessionId);
     window.location.href = "http://localhost:8083/api/v1/rollTheDice/" + sessionId;
 }
@@ -84,14 +74,61 @@ function joinSession(clicked_id){
 function getGameSession(){
     var session = JSON.parse(httpGet('http://localhost:8083/api/v1/session/currentSession'));
     console.log(session);
-    alert(session.user2.username);
     return session;
+}
+
+function rollTheSessionDice(){
+    var session = getGameSession();
+    var dice = httpGet('http://localhost:8083/api/v1/sessionDiceValue/' + session.sessionId);
+    var activeSession = JSON.parse(httpGet('http://localhost:8083/api/v1/activeSession/' + session.sessionId));
+    document.getElementById("score-player1").innerHTML = activeSession.score.score_player1;
+    document.getElementById("score-player2").innerHTML = activeSession.score.score_player2;
+
+}
+
+
+function rollTheDiceNew(){
+    var session = getGameSession();
+
+    var dice1 = JSON.parse(httpGet('http://localhost:8083/api/v1/sessionDiceValue/' + session.sessionId));
+    var firstRandomNumber = dice1.dice_value+1;
+
+    const firstDiceImage = '/assets/dice' + firstRandomNumber + '.png';
+    document.querySelectorAll('img')[0].setAttribute('src', firstDiceImage);
+
+    document.querySelectorAll('img')[1].setAttribute('src', secondDiceImage);
+
+    if (firstRandomNumber > secondRandomNumber) {
+        document.querySelector('h1').innerHTML = "The winner is User 1";
+
+    } else if (firstRandomNumber < secondRandomNumber) {
+
+        document.querySelector('h1').innerHTML = "The winner is User 2";
+    } else {
+
+        document.querySelector('h1').innerHTML = "It's a draw";
+    }
+
+    var activeSession = JSON.parse(httpGet('http://localhost:8083/api/v1/activeSession/' + session.sessionId));
+    document.getElementById("score-player1").innerHTML = activeSession.score.score_player1;
+    document.getElementById("score-player2").innerHTML = activeSession.score.score_player2;
 }
 
 function playerInfo(){
     var session = getGameSession();
-    alert(session.user1.firstname);
     document.getElementById("user1").innerHTML = session.user1.firstname;
     document.getElementById("user2").innerHTML = session.user2.firstname;
 }
 
+var timer;
+
+function startTimer() {
+    timer = setInterval(function() {
+        rollTheSessionDice();
+    }, 10000);
+}
+
+function stopTimer() {
+    alert("Timer stopped");
+    clearInterval(timer);
+}

@@ -4,11 +4,17 @@ public class Score {
 
     public Integer score_player1;
     public Integer score_player2;
+    boolean userTurn = true;
 
     public Score() {
         this.score_player1 = 0;
         this.score_player2 = 0;
+
     }
+
+    public boolean getUserTurn(){return this.userTurn;}
+
+    public void setUserTurn(boolean userTurn){this.userTurn = userTurn;}
 
     public Integer getScore_player1() {
         return score_player1;

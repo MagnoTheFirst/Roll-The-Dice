@@ -16,9 +16,16 @@ import java.util.*;
 @Service
 public class SessionService {
 
+    //TODO[] remove session from waiting sessions
+
     public ArrayList<Session> sessions = new ArrayList<>();
     ArrayList<Session> sessions2 = new ArrayList<>();
     Integer sessionsCounter = null;
+    public ArrayList<Session> activeSessions = new ArrayList<>(); ;
+
+    public ArrayList<Session> getActiveSessions(){
+        return this.activeSessions;
+    }
 
     @Autowired
     public SessionService( ) {
@@ -30,7 +37,6 @@ public class SessionService {
 
         createNewSession(demoUser1);
         createNewSession(demoUser2);
-
 
         sessions.get(1).setUser2(demoUser3);
     }
@@ -48,9 +54,9 @@ public class SessionService {
         return session;
     }
 
-    void deleteSession(Session session){
+    void deleteSession(UUID sessionId){
         for(int i = 0; i < sessions.size(); i++){
-            if(session.getSessionId() == sessions.get(i).getSessionId()){
+            if(sessionId == sessions.get(i).getSessionId()){
                 sessions.remove(i);
             }
         }
@@ -59,14 +65,33 @@ public class SessionService {
     public Session getSession(UUID sessionId){
         Session session = null;
         for(int i = 0; i < sessions.size(); i++) {
-            System.out.println(sessions.get(i).getSessionId());
             if(sessions.get(i).getSessionId().equals(sessionId)){
                 session = sessions.get(i);
                 this.sessionsCounter = i;
-                System.out.println("--------------------"+ session.getSessionId());
             }
         }
         return session;
+    }
+
+    public Session getActiveSession(UUID sessionId){
+        Session session = null;
+        for(int i = 0; i < activeSessions.size(); i++) {
+            System.out.println(sessions.get(i).getSessionId());
+            if(activeSessions.get(i).getSessionId().equals(sessionId)){
+                session = activeSessions.get(i);
+            }
+        }
+        return session;
+    }
+
+    public Integer getActiveSessionIndex(UUID sessionId){
+        Integer index = null;
+        for(int i = 0; i < activeSessions.size(); i++){
+            if(activeSessions.get(i).getSessionId() == sessionId){
+               index = i;
+            }
+        }
+        return index;
     }
 
     public Integer getSessionIndex(){
@@ -139,6 +164,14 @@ public class SessionService {
 
     public List<Session> getSessions1(){
         return this.sessions;
+    }
+
+    public void setActiveSession(Session session){
+        this.activeSessions.add(session);
+    }
+
+    public void removeActiveSession(UUID sessionId){
+        this.activeSessions.remove(getActiveSessionIndex(sessionId));
     }
 
 }
