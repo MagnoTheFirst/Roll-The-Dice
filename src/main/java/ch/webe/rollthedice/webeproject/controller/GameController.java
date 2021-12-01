@@ -185,4 +185,8 @@ public class GameController {
         return new ResponseEntity<Session>(session, HttpStatus.OK);
     }
 
+    @GetMapping("api/v1/waitingForUser")
+    public String getWaiting(Model model){
+        return "waiting-for-second-player";
+    }
 }

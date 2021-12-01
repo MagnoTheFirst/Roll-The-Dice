@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -138,8 +139,22 @@ public class SessionController {
         sessionService.activeSessions.add(session);
 
         //TODO[] remove session from waiting sessions
-        sessionService.sessions.set(sessionService.getSessionIndex(), session);
+        sessionService.sessions.remove(sessionService.getSessionIndex());
         return HttpStatus.OK;
+    }
+
+    //Soll eine Session erstellen sie zur liste hinzufügen und die Session ID zurückgeben
+    @CrossOrigin(origins = "*")
+    @GetMapping("api/v1/newSession/{email}")
+    public ResponseEntity<Session> createNewSession1(@PathVariable String email){
+        System.out.println("newSession" + email);
+        AppUser appUser = appUserService.getByEmail(email).getBody();
+        this.currentUser = appUser;
+        User user = new User(appUser.getFirstname(), appUser.getLastname(), appUser.getEmail());
+
+        Session session = sessionService.createNewSession(user);
+        System.out.println("newSession" + session.getSessionId());
+        return new ResponseEntity<Session>(session, HttpStatus.OK);
     }
 
 }
