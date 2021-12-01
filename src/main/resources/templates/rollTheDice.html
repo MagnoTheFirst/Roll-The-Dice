@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body onload="rollTheDice2('http://localhost:8083/api/v1/diceValue'), getSession(), playerInfo()">
+<body onload="getGameSession(),  playerInfo(), loadUser(), prepareTemplate()">
 <div class="wrapper">
     <h1></h1>
     <div class="dice-area">
@@ -34,7 +34,7 @@
         <img src="" alt="">
     </div>
     <div>
-        <input class="buttons" type="button" value="roll the dice" onclick="rollTheDiceNew(), startTimer();">
+        <input id="rollTheDiceBtn"class="buttons" type="button" value="roll the dice" onclick="rollTheDiceNew1()">
     </div>
 </div>
 <div class="chat">

@@ -90,6 +90,9 @@ public class SessionService {
             if(activeSessions.get(i).getSessionId() == sessionId){
                index = i;
             }
+            else{
+                index =  0;
+            }
         }
         return index;
     }

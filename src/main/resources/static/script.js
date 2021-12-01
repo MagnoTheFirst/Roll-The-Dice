@@ -26,9 +26,6 @@
     }
 }*/
 
-function hitTheSpot(){
-    alert("show");
-}
 function httpGet(theUrl)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -37,6 +34,7 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 
+// wird das noch benötigt?
 function rollTheDice1(url){
     var resp1 = httpGet(url);
     var dice1 = JSON.parse(resp1);
@@ -68,6 +66,7 @@ function rollTheDice1(url){
 
 }
 
+// wird das noch benötigt?
 function rollTheDice2(url){
     var resp1 = httpGet(url);
     var dice1 = JSON.parse(resp1);
@@ -98,6 +97,7 @@ function rollTheDice2(url){
     }
 }
 
+// wird das noch benötigt?
 function rollTheDice3(url){
     //Dice 1
     var resp1 = httpGet(url);

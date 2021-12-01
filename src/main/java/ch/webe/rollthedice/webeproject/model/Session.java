@@ -12,7 +12,7 @@ public class Session {
     User user1;
     User user2;
     boolean waitingForParticipant;
-    boolean user1Turn;
+    String userTurn; //TODO[] optimize for cleancode
     Integer roundCounter;
     Score score;
 
@@ -21,7 +21,7 @@ public class Session {
         this.user1 = user1;
         this.user2 = null;
         this.waitingForParticipant = true;
-        this.user1Turn = true;
+        this.userTurn = user1.getEmail();
         this.roundCounter = 0;
         this.score = new Score();
     }
@@ -51,7 +51,7 @@ public class Session {
         this.appUser1 = user1;
         this.appUser2 = null;
         this.waitingForParticipant = true;
-        this.user1Turn = true;
+        this.userTurn = user1.getEmail();
         this.roundCounter = 0;
         this.score = new Score();
     }
@@ -93,12 +93,12 @@ public class Session {
         this.waitingForParticipant = waitingForParticipant;
     }
 
-    public boolean isUser1Turn() {
-        return user1Turn;
+    public String getUserTurn() {
+        return userTurn;
     }
 
-    public void setUser1Turn(boolean user1Turn) {
-        this.user1Turn = user1Turn;
+    public void setUserTurn(String userTurn) {
+        this.userTurn = userTurn;
     }
 
     public Integer getRoundCounter() {

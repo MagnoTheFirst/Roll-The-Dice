@@ -8,7 +8,7 @@
     <link th:href="@{/css/chatstyle.css}" rel="stylesheet" />
 </head>
 
-<body th:action="@{/account1}" th:object="${user}" onload="connect1(), getSessions()" >
+<body th:action="@{/account1}" th:object="${user}" onload="connect1(), getSessions(), prepareTemplate()">
     <h1 class="hidden">Roll the Dice </h1>
     <h2 id="welcome" th:text="'Hallo '+ ${user.firstname} + ' ' + ${user.lastname}"></h2>
     <p id="email" th:text="${user.email}" class="hidden" >
@@ -17,13 +17,19 @@
     <noscript>
         <h2>Scheint als ob der Browser kein JavaScript supported</h2>
     </noscript>
+
+
+    <div id="joinSession">
+        <h3>Join random session</h3>
+    </div>
+    <div id="createSession">
+        <h3>Create Session</h3>
+    </div>
     <div id="table">
         <h3> Sessions:</h3>
         <div></div>
     </div>
 
-        </div>
-    </div>
     <div id="chat-container">
         <div id="chat-page" class="hidden">
             <div class="chat-container">
