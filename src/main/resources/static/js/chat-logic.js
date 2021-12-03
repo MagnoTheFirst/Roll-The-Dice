@@ -14,6 +14,14 @@ var colors = [
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
+
+function setEmailAsCookie(){
+    var email = document.getElementById("email").textContent;
+    alert(email);
+    document.cookie = email;
+    alert(document.cookie);
+}
+
 function connect1() {
     username = document.getElementById("email").textContent;
 
