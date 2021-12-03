@@ -17,9 +17,7 @@ var colors = [
 
 function setEmailAsCookie(){
     var email = document.getElementById("email").textContent;
-    alert(email);
     document.cookie = email;
-    alert(document.cookie);
 }
 
 function connect1() {

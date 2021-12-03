@@ -12,17 +12,19 @@ function httpGet(url)
 }
 
 function rollTheDiceNew1(){
+
     var session = getActiveSession(this.gameSessionId);
     var dice1 = JSON.parse(httpGet('http://localhost:8083/api/v1/sessionValues/' + session.sessionId + '/' + email));
 
     var firstRandomNumber = dice1.score.score_player1;
     var secondRandomNumber = dice1.score.score_player2;
 
-    const firstDiceImage = '/assets/dice' + firstRandomNumber + '.png';
-    const secondDiceImage = '/assets/dice' + secondRandomNumber + '.png';
+    var firstDiceImage = '/assets/dice' + firstRandomNumber + '.png';
+    var secondDiceImage = '/assets/dice' + secondRandomNumber + '.png';
 
     document.querySelectorAll('img')[0].setAttribute('src', firstDiceImage);
     document.querySelectorAll('img')[1].setAttribute('src', secondDiceImage);
+
 
     if (firstRandomNumber > secondRandomNumber) {
         document.querySelector('h1').innerHTML = "The winner is User 1";
@@ -36,8 +38,8 @@ function rollTheDiceNew1(){
     }
 
     var activeSession = JSON.parse(httpGet('http://localhost:8083/api/v1/activeSession/' + session.sessionId));
-    document.getElementById("score-player1").innerHTML = dice1.score.score_player1;
-    document.getElementById("score-player2").innerHTML = dice1.score.score_player2;
+    document.getElementById("score-player1").innerHTML = session.score.score_player1;
+    document.getElementById("score-player2").innerHTML = session.score.score_player2;
     startTimer();
     document.getElementById("rollTheDiceBtn").disabled = true;
     document.getElementById("rollTheDiceBtn").bgcolor = '#FFFFFF1B';
@@ -50,15 +52,15 @@ function loadUser(){
 }
 
 function prepareTemplate(){
-    var session = getActiveSession(session.sessionId);
+    var session = JSON.parse(httpGet('http://localhost:8083/api/v1/session/currentSession'));
     var email = document.cookie;
 
     console.log(email);
     var firstRandomNumber = session.score.score_player1 + 1;
     var secondRandomNumber = session.score.score_player2 + 1;
 
-    const firstDiceImage = '/assets/dice' + firstRandomNumber + '.png';
-    const secondDiceImage = '/assets/dice' + secondRandomNumber + '.png';
+    var firstDiceImage = '/assets/dice' + firstRandomNumber + '.png';
+    var secondDiceImage = '/assets/dice' +  secondRandomNumber + '.png';
 
     document.getElementById("user1").innerHTML = session.user1.firstname;
     document.getElementById("user2").innerHTML = session.user2.firstname;
@@ -96,48 +98,81 @@ function getGameSession(){
 
 //TODO[] check functionality
 function playerInfo1(){
-    var session = JSON.parse(httpGet('http://localhost:8083/api/v1/session/currentSession'));
+    var session = getActiveSession(this.gameSessionId);
 //TODO[] check if userturn true if it is stop timer
 
-    if(session.userTurn == email){
-        alert('Stop the loop. Its ' + email + 'turn');
+    var firstRandomNumber = session.score.score_player1;
+    var secondRandomNumber = session.score.score_player2;
+
+    var firstDiceImage = '/assets/dice' + firstRandomNumber + '.png';
+    var secondDiceImage = '/assets/dice' + secondRandomNumber + '.png';
+
+    console.log("------------------> Sesssion userTurn " + session.userTurn);
+    if(session.userTurn == email) {
         document.getElementById("rollTheDiceBtn").disabled = false;
         stopTimer();
         document.getElementById("rollTheDiceBtn").bgcolor = 'rgba(151,255,27,0.34)';
-    }
 
-    var firstRandomNumber = 0;
-    var secondRandomNumber = 0;
+        if (firstRandomNumber == 0 && secondRandomNumber == 0) {
+            firstRandomNumber = 1;
+            secondRandomNumber = 1;
 
+            document.getElementById("score-player1").innerHTML = session.score.score_player1;
+            document.getElementById("score-player2").innerHTML = session.score.score_player2;
 
-    if(firstRandomNumber == 0 && secondRandomNumber == 0){
-        firstRandomNumber = 1;
-        secondRandomNumber = 1;
-    }
-    else if(secondRandomNumber == 0){
-        secondRandomNumber = 1;
-    }
-    else if(firstRandomNumber == 0){
-        firstRandomNumber = 1;
+            document.getElementById("user1").innerHTML = session.user1.firstname;
+            document.getElementById("user2").innerHTML = session.user2.firstname;
+
+            document.querySelectorAll('img')[0].setAttribute('src', firstDiceImage);
+            document.querySelectorAll('img')[1].setAttribute('src', secondDiceImage);
+        } else if (secondRandomNumber == 0) {
+            secondRandomNumber = 1;
+
+            document.getElementById("score-player1").innerHTML = session.score.score_player1;
+            document.getElementById("score-player2").innerHTML = session.score.score_player2;
+
+            document.getElementById("user1").innerHTML = session.user1.firstname;
+            document.getElementById("user2").innerHTML = session.user2.firstname;
+
+            document.querySelectorAll('img')[0].setAttribute('src', firstDiceImage);
+            document.querySelectorAll('img')[1].setAttribute('src', secondDiceImage);
+        } else if (firstRandomNumber == 0) {
+            firstRandomNumber = 1;
+
+            document.getElementById("score-player1").innerHTML = session.score.score_player1;
+            document.getElementById("score-player2").innerHTML = session.score.score_player2;
+
+            document.getElementById("user1").innerHTML = session.user1.firstname;
+            document.getElementById("user2").innerHTML = session.user2.firstname;
+
+            document.querySelectorAll('img')[0].setAttribute('src', firstDiceImage);
+            document.querySelectorAll('img')[1].setAttribute('src', secondDiceImage);
+        } else {
+            firstRandomNumber = session.score.score_player1;
+            secondRandomNumber = session.score.score_player2;
+
+            document.getElementById("score-player1").innerHTML = session.score.score_player1;
+            document.getElementById("score-player2").innerHTML = session.score.score_player2;
+
+            document.getElementById("user1").innerHTML = session.user1.firstname;
+            document.getElementById("user2").innerHTML = session.user2.firstname;
+
+            document.querySelectorAll('img')[0].setAttribute('src', firstDiceImage);
+            document.querySelectorAll('img')[1].setAttribute('src', secondDiceImage);
+        }
     }
     else{
-        firstRandomNumber = session.score.score_player1;
-        secondRandomNumber = session.score.score_player2;
+        document.getElementById("rollTheDiceBtn").bgcolor = 'rgba(151,255,27,0.34)';
+        document.getElementById("rollTheDiceBtn").disabled = true;
+        document.getElementById("score-player1").innerHTML = session.score.score_player1;
+        document.getElementById("score-player2").innerHTML = session.score.score_player2;
+
+        document.getElementById("user1").innerHTML = session.user1.firstname;
+        document.getElementById("user2").innerHTML = session.user2.firstname;
+
+        document.querySelectorAll('img')[0].setAttribute('src', firstDiceImage);
+        document.querySelectorAll('img')[1].setAttribute('src', secondDiceImage);
     }
-
-    const firstDiceImage = '/assets/dice' + firstRandomNumber + '.png';
-    const secondDiceImage = '/assets/dice' + secondRandomNumber + '.png';
-
-    document.getElementById("score-player1").innerHTML = session.score.score_player1;
-    document.getElementById("score-player2").innerHTML = session.score.score_player2;
-
-    document.getElementById("user1").innerHTML = session.user1.firstname;
-    document.getElementById("user2").innerHTML = session.user2.firstname;
-
-    document.querySelectorAll('img')[0].setAttribute('src', firstDiceImage);
-    document.querySelectorAll('img')[1].setAttribute('src', secondDiceImage);
-
-
 }
 
 var timer;

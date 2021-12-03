@@ -24,7 +24,7 @@ function getSessions(){
     var data = httpGet('http://localhost:8083/api/v1/sessions');
     var sessions = JSON.parse(data);
     var mainContainer = document.getElementById("table");
-    var alert1 = JSON.stringify(sessions[0].sessionId);
+
 
 
     for(var i = 0; i < sessions.length; i++){
@@ -53,9 +53,7 @@ function getSessions(){
 
 //TODO[] do I need this function?
 function postRequest(email, id){
-    alert(email + " " + id);
     var str = 'http://localhost:8083/api/v1/joinSession/'+ email + '/' + id;
-    alert(str);
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", str , true);
     xmlHttp.send();
@@ -103,40 +101,6 @@ function rollTheSessionDice(){
 
 }
 
-
-function rollTheDiceNew(){
-    var session = getActiveSession(this.gameSessionId);
-    alert(session.sessionId);
-    var dice1 = JSON.parse(httpGet('http://localhost:8083/api/v1/sessionValues/' + session.sessionId));
-
-    var firstRandomNumber = dice1.score.score_player1;
-    var secondRandomNumber = dice1.score.score_player2;
-
-    alert(firstRandomNumber);
-    alert(secondRandomNumber);
-
-    const firstDiceImage = '/assets/dice' + firstRandomNumber + '.png';
-    const secondDiceImage = '/assets/dice' + secondRandomNumber + '.png';
-
-    document.querySelectorAll('img')[0].setAttribute('src', firstDiceImage);
-    document.querySelectorAll('img')[1].setAttribute('src', secondDiceImage);
-
-    if (firstRandomNumber > secondRandomNumber) {
-        document.querySelector('h1').innerHTML = "The winner is User 1";
-
-    } else if (firstRandomNumber < secondRandomNumber) {
-
-        document.querySelector('h1').innerHTML = "The winner is User 2";
-    } else {
-
-        document.querySelector('h1').innerHTML = "It's a draw";
-    }
-
-    var activeSession = JSON.parse(httpGet('http://localhost:8083/api/v1/activeSession/' + session.sessionId));
-    document.getElementById("score-player1").innerHTML = dice1.score.score_player1;
-    document.getElementById("score-player2").innerHTML = dice1.score.score_player2;
-    startTimer();
-}
 
 
 function playerInfo(){
