@@ -132,8 +132,9 @@ public class SessionController {
     public HttpStatus joinSession1(@PathVariable UUID sessionId, @PathVariable String email){
         System.out.println(sessionService.getSessionIndex());
         this.currentUser = appUserService.getByEmail(email).getBody();
-        System.out.println("************************" + currentUser.getEmail());
-        User user = new User(currentUser.getFirstname(), currentUser.getLastname(), currentUser.getEmail());
+        AppUser appUser = appUserService.getByEmail(email).getBody();
+        System.out.println("************************" + appUser.getEmail());
+        User user = new User(appUser.getFirstname(), appUser.getLastname(), appUser.getEmail());
         Session session = sessionService.getSession(sessionId);
         session.setUser2(user);
         sessionService.activeSessions.add(session);

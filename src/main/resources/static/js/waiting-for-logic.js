@@ -1,46 +1,46 @@
 'use strict';
+alert("session cookie" + document.cookie);
 
-const session = JSON.parse(document.cookie);
-const session1 = JSON.stringify(session);
+var session;
+var timer;
 
-console.log(session.sessionId);
-alert(session1);
+createNewSession1();
 
-document.getElementById("user-info").innerHTML = "Hello " + session.user1.firstname;
+function createNewSession1(){
+
+    var email = document.cookie;
+    alert(email);
+
+    var sessionData = JSON.parse(httpGet('http://localhost:8083/api/v1/newSession/' + email));
+    session = sessionData;
+    document.getElementById("user-info").innerHTML = 'Hello ' + session.user1.firstname;
+    startTimer();
+}
+
+var session;
 
 var timer;
 
 function startTimer() {
 
-    alert(session.sessionId);
+    alert("Start Timer : " + session.sessionId);
     var countdown = 20;
     timer = setInterval(function() {
 
-        countdown = countdown -1;
-        document.getElementById("waiting-time").innerHTML = countdown;
-        checkIfPlayer2JoindSession();
         if(countdown == 0){
             stopTimer();
             document.getElementById("waiting-time").innerHTML = "We couldnt find a second Player for you sorry";
         }
-
-
+        else{
+            countdown = countdown -1;
+            document.getElementById("waiting-time").innerHTML = countdown;
+            checkIfPlayer2JoindSession();
+        }
     }, 1000);
 }
 
-startTimer();
 
-function stopTimer() {
-    alert("Timer stopped");
-    clearInterval(timer);
-}
-
-function getSession(){
-
-}
-
-function httpGet(url)
-{
+function httpGet(url){
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url, false ); // false for synchronous request
     xmlHttp.send( null );
@@ -56,28 +56,18 @@ function getSession(sessionId){
 function checkIfPlayer2JoindSession(){
     console.log("Checking Player 2");
     var sessionData = getSession(session.sessionId);
-    alert("From Checker" + sessionData.user1.email);
+    console.log("Check if User2 joined" + sessionData.sessionId);
     if(sessionData.user2 != null){
         alert("OK"+ session.user2.firstname);
         stopTimer();
-        document.cookie = sessionData;
+        document.cookie = sessionData + "; email = " + email;
         joinCreatedSession();
     }
 }
 
-function joinSession(session_id, useremail){
 
-    var email = useremail;
-    var userInformation = httpGet('http://localhost:8083/account/'+ email);
 
-    var sessionId = sessionId;
 
-    var sessionData = httpGet('http://localhost:8083/api/v1/session/' + sessionId);
-    var url = 'http://localhost:8083/api/v1/joinSession1/'+ email +'/' + sessionId
-    httpGet(url);
-
-    window.location.href = "http://localhost:8083/api/v1/rollTheDice/" + sessionId;
-}
 
 function joinCreatedSession(){
 
@@ -88,8 +78,13 @@ function joinCreatedSession(){
     var userInformation = httpGet('http://localhost:8083/account/'+ email);
 
     var sessionData = httpGet('http://localhost:8083/api/v1/session/' + sessionId);
-    var url = 'http://localhost:8083/api/v1/joinSession1/'+ email +'/' + sessionId;
-    httpGet(url);
-
+    //var url = 'http://localhost:8083/api/v1/joinSession1/'+ email +'/' + sessionId ;
+    //httpGet(url);
+    document.cookie = email;
     window.location.href = "http://localhost:8083/api/v1/rollTheDice/" + sessionId;
+}
+
+function stopTimer() {
+    alert("Timer stopped");
+    clearInterval(timer);
 }

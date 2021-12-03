@@ -304,7 +304,7 @@ function prepareTemplate(){
     var session = getActiveSession(this.gameSessionId);
     var email = document.cookie;
 
-
+    alert(email);
     var firstRandomNumber = session.score.score_player1 + 1;
     var secondRandomNumber = session.score.score_player2 + 1;
 
@@ -329,6 +329,8 @@ function prepareTemplate(){
 }
 
 function redirectToWaitingFor(){
+    var email = document.getElementById('email').textContent;
+    document.cookie = email;
     window.location.href = "http://localhost:8083/api/v1/waitingForUser";
 
 }
