@@ -96,7 +96,7 @@ function getGameSession(){
 
 //TODO[] check functionality
 function playerInfo1(){
-    var session = getActiveSession(session.sessionId);
+    var session = JSON.parse(httpGet('http://localhost:8083/api/v1/session/currentSession'));
 //TODO[] check if userturn true if it is stop timer
 
     if(session.userTurn == email){
