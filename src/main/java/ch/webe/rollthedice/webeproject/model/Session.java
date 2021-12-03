@@ -15,6 +15,9 @@ public class Session {
     String userTurn; //TODO[] optimize for cleancode
     Integer roundCounter;
     Score score;
+    Integer player1_score;
+    Integer player2_score;
+
 
     public Session(User user1) {
         this.sessionId = UUID.randomUUID();
@@ -24,6 +27,24 @@ public class Session {
         this.userTurn = user1.getEmail();
         this.roundCounter = 0;
         this.score = new Score();
+        this.player1_score = 0;
+        this.player2_score = 0;
+    }
+
+    public Integer getPlayer1_score() {
+        return player1_score;
+    }
+
+    public void setPlayer1_score(Integer player1_score) {
+        this.player1_score = player1_score;
+    }
+
+    public Integer getPlayer2_score() {
+        return player2_score;
+    }
+
+    public void setPlayer2_score(Integer player2_score) {
+        this.player2_score = player2_score;
     }
 
     public void setSessionId(UUID sessionId) {
@@ -54,6 +75,8 @@ public class Session {
         this.userTurn = user1.getEmail();
         this.roundCounter = 0;
         this.score = new Score();
+        this.player1_score = 1;
+        this.player2_score = 1;
     }
 
     public Score getScore(){

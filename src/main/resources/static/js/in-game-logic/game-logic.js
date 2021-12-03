@@ -19,16 +19,16 @@ function loadUser(){
 function rollTheDiceNew1(){
 
     var session = getActiveSession(this.gameSessionId);
-    console.log("----------------->rollTheDiceNew1 gameSessionId" + session.sessionId);
     var dice = JSON.parse(httpGet('http://localhost:8083/api/v1/sessionValues/' + session.sessionId + '/' + email));
-
+    disableButton();
+    startTimer();
+    
     var firstRandomNumber = dice.score.score_player1;
     var secondRandomNumber = dice.score.score_player2;
 
-    setUserData(session);
     setImages(firstRandomNumber, secondRandomNumber);
-    startTimer();
-    disableButton();
+    setUserData(dice);
+
 }
 
 function playerInfo1(){
@@ -39,7 +39,6 @@ function playerInfo1(){
     setUserData(session);
     setImages(firstRandomNumber,secondRandomNumber);
 
-    console.log("------------------> Sesssion userTurn " + session.userTurn);
     if(session.userTurn == email) {
         enableButton();
         stopTimer();
@@ -62,9 +61,9 @@ function playerInfo1(){
         }
     }
     else{
+        disableButton();
         setImages(firstRandomNumber, secondRandomNumber);
         setUserData(session);
-        disableButton();
     }
 }
 
@@ -80,10 +79,6 @@ function prepareTemplate(){
     console.log(email);
     setImages(firstRandomNumber, secondRandomNumber);
     checkUserTurn(session);
- /*   if(session.userTurn != email){
-        disableButton();
-        startTimer();
-    }*/
 }
 
 function getActiveSession(sessionId){
@@ -168,8 +163,17 @@ function setImages(firstRandomNumber, secondRandomNumber) {
 
 function setUserData(sessionObject){
     var sessionData = sessionObject;
+
+    document.getElementById("round").innerHTML = sessionObject.roundCounter;
+
     document.getElementById("user1").innerHTML = sessionData.user1.firstname;
     document.getElementById("user2").innerHTML = sessionData.user2.firstname;
+
+    console.log(sessionData.player1_score);
+    console.log(sessionData.player2_score);
+
+    document.getElementById("score-player1").innerHTML = sessionData.player1_score;
+    document.getElementById("score-player2").innerHTML = sessionData.player2_score;
 }
 
 function checkUserTurn(sessionData){

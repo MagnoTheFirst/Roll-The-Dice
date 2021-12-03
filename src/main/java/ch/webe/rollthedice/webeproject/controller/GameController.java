@@ -74,31 +74,6 @@ public class GameController {
     }
 //------------------------------------Neuer Abschnitt bis hier funktioniert alles ------------------------
 
-
-    //TODO[] optimize score counting
-    @CrossOrigin(origins = "*")
-    @GetMapping("api/v1/sessionDiceValue/{sessionId}")
-    public ResponseEntity<Dice> setDiceValueToSession(@PathVariable UUID sessionId, Model model){
-        System.out.println("api/v1/sessionDiceValue - triggereds");
-        this.dice.roll_the_dice();
-        Session session = sessionService.getActiveSession(sessionId);
-        if(session.getScore().getUserTurn() == true){
-            Score score = session.getScore();
-            score.setScore_player1(this.dice.getDice_value() + 1);
-            session.getScore().setUserTurn(false);
-            session.setScore(score);
-            sessionService.getActiveSessions().set(sessionService.getActiveSessionIndex(sessionId), session);
-        }
-        else{
-            Score score = session.getScore();
-            score.setScore_player2(this.dice.getDice_value() + 1);
-            session.getScore().setUserTurn(true);
-            session.setScore(score);
-            sessionService.getActiveSessions().set(sessionService.getActiveSessionIndex(sessionId), session);
-        }
-        return new ResponseEntity<Dice>(this.dice, HttpStatus.OK);
-    }
-
     //TODO[] optimize score counting
     @CrossOrigin(origins = "*")
     @GetMapping("api/v1/activeSession/{sessionId}")
@@ -107,79 +82,49 @@ public class GameController {
         return new ResponseEntity<Session>(session, HttpStatus.OK);
     }
 
-
-    //TODO[] optimize score counting
-    @CrossOrigin(origins = "*")
-    @GetMapping("api/v1/sessionValues/{sessionId}")
-    public ResponseEntity<Session> getDiceValueFromSession(@PathVariable UUID sessionId, Model model){
-        System.out.println("api/v1/sessionDiceValue - triggereds");
-        this.dice.roll_the_dice();
-        Session session = sessionService.getActiveSession(sessionId);
-        if(session.getScore().getUserTurn() == true){
-            Score score = session.getScore();
-            score.setScore_player1(this.dice.getDice_value() + 1);
-            session.getScore().setUserTurn(false);
-            session.setScore(score);
-            sessionService.getActiveSessions().set(sessionService.getActiveSessionIndex(sessionId), session);
-        }
-        else{
-            Score score = session.getScore();
-            score.setScore_player2(this.dice.getDice_value() + 1);
-            session.getScore().setUserTurn(true);
-            session.setScore(score);
-            sessionService.getActiveSessions().set(sessionService.getActiveSessionIndex(sessionId), session);
-        }
-        return new ResponseEntity<Session>(session, HttpStatus.OK);
-    }
-
     //------------------------------------------------- Works fine ---------------------------------------------------
-
-    //Everything works fine if the 1 is removed
-    @CrossOrigin(origins = "*")
-    @GetMapping("api/v1/sessionValues1/{sessionId}/{email}")
-    public ResponseEntity<Session> getDiceValueFromSessionAndSetUserTurn(@PathVariable UUID sessionId, @PathVariable String email, Model model){
-        System.out.println("api/v1/sessionDiceValue - triggereds");
-        this.dice.roll_the_dice();
-        Session session = sessionService.getActiveSession(sessionId);
-        session.setUserTurn(email);
-        if(session.getScore().getUserTurn() == true){
-            Score score = session.getScore();
-            score.setScore_player1(this.dice.getDice_value() + 1);
-            session.getScore().setUserTurn(false);
-            session.setScore(score);
-            sessionService.getActiveSessions().set(sessionService.getActiveSessionIndex(sessionId), session);
-        }
-        else{
-            Score score = session.getScore();
-            score.setScore_player2(this.dice.getDice_value() + 1);
-            session.getScore().setUserTurn(true);
-            session.setScore(score);
-            sessionService.getActiveSessions().set(sessionService.getActiveSessionIndex(sessionId), session);
-        }
-        return new ResponseEntity<Session>(session, HttpStatus.OK);
-    }
 
     @CrossOrigin(origins = "*")
     @GetMapping("api/v1/sessionValues/{sessionId}/{email}")
     public ResponseEntity<Session> getDiceValueFromSessionAndSetUserTurn1(@PathVariable UUID sessionId, @PathVariable String email, Model model){
-        System.out.println("api/v1/sessionDiceValue - triggereds");
-        this.dice.roll_the_dice();
+        //Modified at 15:38
+        Dice dice = new Dice();
+        dice.roll_the_dice();
+
         Session session = sessionService.getActiveSession(sessionId);
+
+        Integer roundCounter = session.getRoundCounter();
+
 
         if(session.getScore().getUserTurn() == true){
             Score score = session.getScore();
-            score.setScore_player1(this.dice.getDice_value() + 1);
+            score.setScore_player1(dice.getDice_value() + 1);
+
             session.getScore().setUserTurn(false);
             session.setScore(score);
             session.setUserTurn(session.getUser2().getEmail());
+
+            //For highscore view
+            Integer playerScore1 = session.getPlayer1_score();
+            playerScore1 += dice.getDice_value() + 1;
+            session.setPlayer1_score(playerScore1);
+
             sessionService.getActiveSessions().set(sessionService.getActiveSessionIndex(sessionId), session);
         }
         else{
             Score score = session.getScore();
-            score.setScore_player2(this.dice.getDice_value() + 1);
+            score.setScore_player2(dice.getDice_value() + 1);
+
             session.getScore().setUserTurn(true);
             session.setScore(score);
             session.setUserTurn(session.getUser1().getEmail());
+
+            //For highscore view
+            Integer playerScore2 = session.getPlayer2_score();
+            playerScore2 += dice.getDice_value() + 1;
+            session.setPlayer2_score(playerScore2);
+
+            session.setRoundCounter(roundCounter + 1);
             sessionService.getActiveSessions().set(sessionService.getActiveSessionIndex(sessionId), session);
         }
         return new ResponseEntity<Session>(session, HttpStatus.OK);
