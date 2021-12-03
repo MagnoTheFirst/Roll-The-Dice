@@ -76,4 +76,14 @@ public class UserSessionController {
         return appUserService.getByEmail(email);
     }
 
+    @CrossOrigin(origins = "localhost:8084/")
+    @GetMapping("/account/lobby/{email}")
+    public String backToLobbby(@PathVariable String email, Model model ){
+        AppUser currentUser = appUserService.getByEmail(email).getBody();
+        User user = new User(currentUser.getFirstname(), currentUser.getLastname(), currentUser.getEmail());
+        model.addAttribute("user", user);
+        return "lobby";
+    }
+
+
 }

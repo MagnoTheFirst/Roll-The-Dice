@@ -3,6 +3,7 @@ var email = loadUser();
 var gameSessionId = session.sessionId;
 
 
+
 function httpGet(url)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -13,6 +14,7 @@ function httpGet(url)
 
 
 function loadUser(){
+    alert(document.cookie);
     this.email =  document.cookie;
 }
 
@@ -32,12 +34,18 @@ function rollTheDiceNew1(){
 }
 
 function playerInfo1(){
+
     var session = getActiveSession(this.gameSessionId);
+
+    someUserCheckedOut(session);
+
     var firstRandomNumber = session.score.score_player1;
     var secondRandomNumber = session.score.score_player2;
 
+
     setUserData(session);
     setImages(firstRandomNumber,secondRandomNumber);
+
 
     if(session.userTurn == email) {
         enableButton();
@@ -97,7 +105,6 @@ function getGameSession(){
     return sessionData;
 }
 
-
 var timer;
 function startTimer() {
     timer = setInterval(function() {
@@ -105,7 +112,6 @@ function startTimer() {
         playerInfo1();
     }, 10000);
 }
-
 
 function stopTimer() {
     console.log("Timer stopped");
@@ -187,3 +193,31 @@ function checkUserTurn(sessionData){
         startTimer();
     }
 }
+
+
+function quitSession(){
+    window.location.href = "http://localhost:8083/account/lobby/" + email;
+}
+
+function quitSession1(){
+    alert(session.sessionId);
+    var currentSession = getActiveSession(session.sessionId);
+    var userEmail = document.cookie;
+    if(currentSession.user1.email == email){
+        httpGet('http://localhost:8083/api/v1/leaveSession/'+email+"/" + currentSession.sessionId);
+        window.location.href = "http://localhost:8083/account/lobby/" + email;
+    }
+    else if(currentSession.user2.email == email){
+        httpGet('http://localhost:8083/api/v1/leaveSession/'+ email+ "/" + currentSession.sessionId);
+        window.location.href = "http://localhost:8083/account/lobby/" + email;
+    }
+
+}
+
+function someUserCheckedOut(currentSession){
+    if(currentSession.user1 == null || currentSession.user2 == null){
+        alert("Your opponent has left the session you win");
+        window.location.href = "http://localhost:8083/account/lobby/" + email;
+    }
+}
+

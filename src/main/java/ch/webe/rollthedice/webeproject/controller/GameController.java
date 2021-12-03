@@ -134,4 +134,20 @@ public class GameController {
     public String getWaiting(Model model){
         return "waiting-for-second-player";
     }
+
+    @GetMapping("api/v1/leaveSession/{email}/{sessionId}")
+    public HttpStatus leaveSession(@PathVariable String email, @PathVariable UUID sessionId){
+        Session session = sessionService.getActiveSession(sessionId);
+        if(session.getUser1().getEmail().equals(email)){
+            session.setUser1(null);
+            return HttpStatus.OK;
+        }
+        else if(session.getUser2().getEmail().equals(email)){
+            session.setUser2(null);
+            return HttpStatus.OK;
+        }
+        else{
+            return HttpStatus.FORBIDDEN;
+        }
+    }
 }
