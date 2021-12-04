@@ -37,7 +37,9 @@ function playerInfo1(){
     var session = getActiveSession(this.gameSessionId);
 
     someUserCheckedOut(session);
-    checkWhoWon( session.sessionId);
+    console.log(session.roundCounter);
+    console.log(session.winnerRound);
+    document.getElementById("winner title").innerHTML = session.winnerRound;
     var firstRandomNumber = session.score.score_player1;
     var secondRandomNumber = session.score.score_player2;
 
@@ -83,7 +85,6 @@ function prepareTemplate(){
     var secondRandomNumber = 1;
 
     setUserData(session);
-    console.log(email);
     setImages(firstRandomNumber, secondRandomNumber);
     checkUserTurn(session);
 }
@@ -99,7 +100,6 @@ function getActiveSession(sessionId){
 //--------------------------------------------- Works ------------------------------------------
 function getGameSession(){
     var sessionData = JSON.parse(httpGet('http://localhost:8083/api/v1/session/currentSession'));
-    console.log(sessionData);
     this.gameSessionId = session.sessionId;
     return sessionData;
 }
@@ -174,9 +174,6 @@ function setUserData(sessionObject){
     document.getElementById("user1").innerHTML = sessionData.user1.firstname;
     document.getElementById("user2").innerHTML = sessionData.user2.firstname;
 
-    console.log(sessionData.player1_score);
-    console.log(sessionData.player2_score);
-
     document.getElementById("score-player1").innerHTML = sessionData.player1_score;
     document.getElementById("score-player2").innerHTML = sessionData.player2_score;
 }
@@ -202,7 +199,7 @@ function quitSession1(){
     var currentSession = getActiveSession(session.sessionId);
     var userEmail = document.cookie;
     if(currentSession.user1.email == email){
-        httpGet('http://localhost:8083/api/v1/leaveSession/'+email+"/" + currentSession.sessionId);
+        httpGet('http://localhost:8083/api/v1/leaveSession/'+ email +"/" + currentSession.sessionId);
         window.location.href = "http://localhost:8083/account/lobby/" + email;
     }
     else if(currentSession.user2.email == email){
@@ -215,7 +212,6 @@ function someUserCheckedOut(currentSession){
     if(currentSession.user1 == null || currentSession.user2 == null){
         alert("Your opponent has left the session you win");
         httpGet('http://localhost:8083/api/v1/leaveSession/'+ email +"/" + currentSession.sessionId);
-        httpGet('http://localhost:8083/api/v1/clearSession/' + currentSession.sessionId);
         httpGet('http://localhost:8083/api/v1/clearSession/' + currentSession.sessionId);
         window.location.href = "http://localhost:8083/account/lobby/" + email;
     }

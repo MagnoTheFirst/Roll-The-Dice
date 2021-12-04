@@ -59,9 +59,14 @@ public class SessionService {
                 sessions.remove(i);
                 sessions2.remove(i);
             }
+            else if(session.getUser1() == null && session.getUser2() == null){
+                sessions.remove(i);
+                sessions2.remove(i);
+            }
         }
     }
 
+    /*
     public void leaveSession(UUID sessionId, User user){
         Session session = getActiveSession(sessionId);
         if(session.getUser1().getEmail().equals(user.getEmail())){
@@ -78,6 +83,7 @@ public class SessionService {
             System.out.println("User not found");
         }
     }
+     */
 
     public void leaveSession(User user){
         for(int i = 0; i < activeSessions.size(); i++){
@@ -119,8 +125,10 @@ public class SessionService {
 
     public void deleteSession(UUID sessionId){
         for(int i = 0; i < sessions.size(); i++){
-            if(sessionId == sessions.get(i).getSessionId()){
+            Session session = sessions.get(i);
+            if(sessionId.equals(session.getSessionId())){
                 sessions.remove(i);
+                sessions2.remove(i);
             }
         }
     }
