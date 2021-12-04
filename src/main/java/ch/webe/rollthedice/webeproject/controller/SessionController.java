@@ -124,14 +124,13 @@ public class SessionController {
     @GetMapping("api/v1/joinSession1/{email}/{sessionId}")
     public HttpStatus joinSession1(@PathVariable UUID sessionId, @PathVariable String email){
         System.out.println(sessionService.getSessionIndex());
-        this.currentUser = appUserService.getByEmail(email).getBody();
+//        this.currentUser = appUserService.getByEmail(email).getBody();
         AppUser appUser = appUserService.getByEmail(email).getBody();
         System.out.println("************************" + appUser.getEmail());
         User user = new User(appUser.getFirstname(), appUser.getLastname(), appUser.getEmail());
         Session session = sessionService.getSession(sessionId);
         session.setUser2(user);
         sessionService.activeSessions.add(session);
-        sessionService.deleteSession(sessionId);
 
         //TODO[] remove session from waiting sessions
         sessionService.sessions.remove(sessionService.getSessionIndex());
@@ -155,7 +154,8 @@ public class SessionController {
     //This Api Calll should remove the session from the session pool
     @GetMapping("/api/v1/clearSession/{sessionId}")
     public void clearSession(UUID sessionId){
-        sessionService.clearCurrentSessions();
-        sessionService.clearSessions();
+        sessionService.deleteSession(sessionId);
+//        sessionService.clearCurrentSessions();
+//        sessionService.clearSessions();
     }
 }

@@ -27,6 +27,7 @@ function startTimer() {
         if(countdown == 0){
             stopTimer();
             document.getElementById("waiting-time").innerHTML = "We couldn't find a second Player for you sorry";
+
         }
         else{
 
@@ -86,3 +87,9 @@ function stopTimer() {
     console.log("Timer stopped");
     clearInterval(timer);
 }
+
+function backToLobby(){
+    window.location.href = "http://localhost:8083/account/lobby/" + email;
+}
+
+

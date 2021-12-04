@@ -1,11 +1,10 @@
 package ch.webe.rollthedice.webeproject.controller;
 
-import ch.webe.rollthedice.webeproject.model.Dice;
-import ch.webe.rollthedice.webeproject.model.Score;
-import ch.webe.rollthedice.webeproject.model.Session;
-import ch.webe.rollthedice.webeproject.model.User;
+import ch.webe.rollthedice.webeproject.model.*;
+import ch.webe.rollthedice.webeproject.services.AppUserService;
 import ch.webe.rollthedice.webeproject.services.DiceService;
 import ch.webe.rollthedice.webeproject.services.SessionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,11 +27,15 @@ public class GameController {
 
     Session currentSession;
 
-    public GameController(DiceService diceService, SessionService sessionService) {
+    AppUserService appUserService;
+
+    @Autowired
+    public GameController(DiceService diceService, SessionService sessionService, AppUserService appUserService) {
 
         this.sessionService = sessionService;
         this.diceService = diceService;
         this.dice  = new Dice();
+        this.appUserService = appUserService;
     }
 
     @GetMapping("api/v1/get-dice-value")
@@ -142,18 +145,18 @@ public class GameController {
     }
 
     @GetMapping("api/v1/leaveSession/{email}/{sessionId}")
-    public HttpStatus leaveSession(@PathVariable String email, @PathVariable UUID sessionId){
+    public void leaveSession(@PathVariable String email, @PathVariable UUID sessionId){
         Session session = sessionService.getActiveSession(sessionId);
-        if(session.getUser1().getEmail().equals(email)){
-            session.setUser1(null);
-            return HttpStatus.OK;
-        }
-        else if(session.getUser2().getEmail().equals(email)){
-            session.setUser2(null);
-            return HttpStatus.OK;
+        AppUser appUser = appUserService.getByEmail(email).getBody();
+        User user = new User(appUser.getFirstname(), appUser.getLastname(), appUser.getEmail());
+        sessionService.leaveSession(user);
+        if(session.getUser1()== null && session.getUser2() == null){
+            sessionService.clearCurrentSessions();
+            sessionService.clearSessions();
+            sessionService.deleteSession(sessionId);
         }
         else{
-            return HttpStatus.FORBIDDEN;
+            System.out.println("nothing happen");
         }
     }
 }

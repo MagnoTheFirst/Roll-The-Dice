@@ -63,6 +63,9 @@ public class Session {
                 this.winnerMatch = "its a draw. Sorry no winner, try to do it better next time";
             }
         }
+        else{
+            System.out.println("actually no winner");
+        }
     }
 
     //After 5 Rounds check who has the higher score and set Winners email
