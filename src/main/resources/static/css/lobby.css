@@ -1,0 +1,27 @@
+body{
+    background-color: #0a7d19;
+}
+
+h1{
+    color: rgba(164, 128, 10, 0.95);
+}
+
+#welcome{
+    color: rgba(164, 128, 10, 0.95);
+}
+#joinSession{
+    background-color: darkred;
+    color: rgba(164, 128, 10, 0.95);
+    text-align: center;
+}
+#createSession{
+    background-color: darkred;
+    color: rgba(164, 128, 10, 0.95);
+    text-align: center;
+}
+
+#table{
+    text-align: center;
+}
+
+

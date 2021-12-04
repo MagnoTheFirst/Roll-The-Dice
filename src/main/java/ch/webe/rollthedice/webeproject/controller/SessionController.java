@@ -91,14 +91,6 @@ public class SessionController {
         return new ResponseEntity<Session>(sessionService.getSession(sessionId), HttpStatus.OK);
     }
 
-    //muss angepasst werden.
- //   @CrossOrigin(origins = "*")
-   // @GetMapping("api/v1/{sessionId}/scoreUser2")
-    //public ResponseEntity<UUID> getScoreUser2(@PathVariable UUID sessionId){
-
-      //  return new ResponseEntity<UUID>(sessionService.searchSession(), HttpStatus.OK);
-    //}
-
     @CrossOrigin(origins = "*")
     @PostMapping("api/v1/searchSession2")
     public ResponseEntity<Session> searchSession2(@RequestBody User user){
@@ -123,6 +115,7 @@ public class SessionController {
         Session session = sessionService.getSession(sessionId);
         session.setUser2(user);
         sessionService.sessions.set(sessionService.getSessionIndex(), session);
+        sessionService.setCurrentSession(sessionId, session);
         return HttpStatus.OK;
     }
 
@@ -138,6 +131,7 @@ public class SessionController {
         Session session = sessionService.getSession(sessionId);
         session.setUser2(user);
         sessionService.activeSessions.add(session);
+        sessionService.deleteSession(sessionId);
 
         //TODO[] remove session from waiting sessions
         sessionService.sessions.remove(sessionService.getSessionIndex());
@@ -158,4 +152,10 @@ public class SessionController {
         return new ResponseEntity<Session>(session, HttpStatus.OK);
     }
 
+    //This Api Calll should remove the session from the session pool
+    @GetMapping("/api/v1/clearSession/{sessionId}")
+    public void clearSession(UUID sessionId){
+        sessionService.clearCurrentSessions();
+        sessionService.clearSessions();
+    }
 }

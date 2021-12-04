@@ -13,11 +13,62 @@ public class Session {
     User user2;
     boolean waitingForParticipant;
     String userTurn; //TODO[] optimize for cleancode
-    Integer roundCounter;
+
     Score score;
     Integer player1_score;
     Integer player2_score;
 
+    Integer roundCounter;
+    String winnerRound = "waiting for winner";
+    String winnerMatch = "waiting for winner";
+
+    public String getWinnerRound() {
+        return winnerRound;
+    }
+
+    // Winner per round for different modi
+    public void setWinnerRound(String email) {
+        this.winnerRound = winnerRound;
+    }
+
+    public String getWinnerMatch() {
+        return winnerMatch;
+    }
+
+    public void CheckWhoIsTheWinnerOfThisRound(){
+        if(score.getScore_player1() < score.getScore_player2()){
+            this.winnerRound = "The winner of this round is " +user1.getEmail();
+        }
+        else if(score.getScore_player1() > score.getScore_player2()){
+            this.winnerRound = "The winner of this round is " +user2.getEmail();
+        }
+        else if(score.getScore_player1() == null || score.getScore_player2() == null || this.winnerRound == null){
+            this.winnerRound = "seams that there was some problem";
+        }
+        else{
+            this.winnerRound = "its a draw";
+        }
+    }
+
+    public void checkIfMatchFinished(){
+        if(roundCounter == 5) {
+            if (player1_score < player2_score) {
+                this.winnerMatch = "The winner of this Match is " +user1.getEmail();
+            } else if (player1_score > player2_score) {
+                this.winnerMatch = "The winner of this round is " +user2.getEmail();
+            }
+            else if(player1_score == null || player2_score == null || this.winnerMatch == null){
+                this.winnerRound = "seams that there was some problem";
+            }else {
+                this.winnerMatch = "its a draw. Sorry no winner, try to do it better next time";
+            }
+        }
+    }
+
+    //After 5 Rounds check who has the higher score and set Winners email
+    public void setWinnerMatch(String winnerMatch) {
+        this.winnerMatch = winnerMatch;
+    }
 
     public Session(User user1) {
         this.sessionId = UUID.randomUUID();
@@ -29,6 +80,8 @@ public class Session {
         this.score = new Score();
         this.player1_score = 0;
         this.player2_score = 0;
+        this.winnerMatch = null;
+        this.winnerRound = null;
     }
 
     public Integer getPlayer1_score() {

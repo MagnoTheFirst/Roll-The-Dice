@@ -109,6 +109,9 @@ public class GameController {
             playerScore1 += dice.getDice_value() + 1;
             session.setPlayer1_score(playerScore1);
 
+            session.setWinnerRound("Waiting for a winner");
+            session.setWinnerMatch("Waiting for a winner");
+
             sessionService.getActiveSessions().set(sessionService.getActiveSessionIndex(sessionId), session);
         }
         else{
@@ -123,8 +126,11 @@ public class GameController {
             Integer playerScore2 = session.getPlayer2_score();
             playerScore2 += dice.getDice_value() + 1;
             session.setPlayer2_score(playerScore2);
-
             session.setRoundCounter(roundCounter + 1);
+
+            session.CheckWhoIsTheWinnerOfThisRound();
+            session.checkIfMatchFinished();
+
             sessionService.getActiveSessions().set(sessionService.getActiveSessionIndex(sessionId), session);
         }
         return new ResponseEntity<Session>(session, HttpStatus.OK);

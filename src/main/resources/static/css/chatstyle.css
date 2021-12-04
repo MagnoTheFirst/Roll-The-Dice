@@ -17,7 +17,7 @@ body {
     font-size: 1rem;
     line-height: 1.58;
     color: #333;
-    background-color: #f4f4f4;
+    background-color: #fff;;
     height: 100%;
 
 
@@ -31,9 +31,9 @@ body {
 #chat-container{
 
     height: 50%;
-    width: 40%;
+    width: 60%;
     text-align: center;
-    margin-left: 20%;
+    margin-left: 21%;
     float: bottom;
 }
 .chat-container{
@@ -105,7 +105,7 @@ button.default {
 }
 
 button.primary {
-    background-color: #25be38;
+    background-color: #1778dd;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
     color: #fff;
 }
@@ -121,7 +121,7 @@ button.accent {
     height: 100%;
 }
 .chat-container {
-    max-width: 700px;
+    max-width: 850px;
     margin-left: auto;
     margin-right: auto;
     background-color: #fff;
@@ -199,4 +199,45 @@ button.accent {
     width: 80px;
     height: 38px;
     margin-left: 5px;
+}
+
+h1{
+    color: #333;
+    font-size: 4em;
+    text-align: center;
+    size: 1em;
+}
+
+#welcome{
+    color: #333;
+    font-size: 2em;
+    text-align: center;
+}
+#joinSession{
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+}
+
+#createSession{
+    text-align: center;
+
+}
+
+#createButton{
+    background-color: #007bff;
+    border-radius: 5%;
+    width: 10em;
+    height: 3em;
+    font-size: 1em;
+    color: white;
+    text-align: center;
+}
+
+#table{
+    text-align: center;
+}
+
+#email{
+    display: none;
 }

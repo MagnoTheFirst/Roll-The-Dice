@@ -8,9 +8,11 @@ import ch.webe.rollthedice.webeproject.repos.SessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 @Service
@@ -41,6 +43,57 @@ public class SessionService {
         sessions.get(1).setUser2(demoUser3);
     }
 
+    public void clearCurrentSessions(){
+        for(int i = 0; i < activeSessions.size(); i++){
+            Session session = activeSessions.get(i);
+            if(session.getUser1() == null || session.getUser2() == null){
+                activeSessions.remove(i);
+            }
+        }
+    }
+
+    public void clearSessions(){
+        for(int i = 0; i < activeSessions.size(); i++){
+            Session session = activeSessions.get(i);
+            if(session.getUser1() != null && session.getUser2() != null){
+                sessions.remove(i);
+                sessions2.remove(i);
+            }
+        }
+    }
+
+    public void leaveSession(UUID sessionId, User user){
+        Session session = getActiveSession(sessionId);
+        if(session.getUser1().getEmail().equals(user.getEmail())){
+            session.setUser1(null);
+            setCurrentSession(sessionId, session);
+            System.out.println("User 1 "+  session.getUser1().getEmail() + " leaves the session");
+        }
+        else if(session.getUser2().getEmail().equals(user.getEmail())){
+            session.setUser2(null);
+            setCurrentSession(sessionId, session);
+            System.out.println("User 1 "+  session.getUser2().getEmail() + " leaves the session");
+        }
+        else{
+            System.out.println("User not found");
+        }
+    }
+
+    public void leaveSession(User user){
+        for(int i = 0; i < activeSessions.size(); i++){
+            Session session = activeSessions.get(i);
+            if(user.getEmail().equals(session.getUser1().getEmail())){
+                session.setUser1(null);
+                activeSessions.set(i, session);
+                System.out.println("User not found");
+            }
+            else if(user.getEmail().equals(session.getUser2().getEmail())){
+                session.setUser2(null);
+                activeSessions.set(i, session);
+                System.out.println("User not found");
+            }
+        }
+    }
 
    public Session createNewSession(User user1){
         Session session = new Session(user1);
@@ -54,7 +107,17 @@ public class SessionService {
         return session;
     }
 
-    void deleteSession(UUID sessionId){
+
+    void deleteCurrentSession(UUID sessionId){
+        for(int i = 0; i < activeSessions.size(); i++){
+            if(sessionId == activeSessions.get(i).getSessionId()){
+                activeSessions.remove(i);
+            }
+        }
+    }
+
+
+    public void deleteSession(UUID sessionId){
         for(int i = 0; i < sessions.size(); i++){
             if(sessionId == sessions.get(i).getSessionId()){
                 sessions.remove(i);
@@ -71,6 +134,16 @@ public class SessionService {
             }
         }
         return session;
+    }
+
+
+    public void setCurrentSession(UUID sessionId, Session session){
+        for(int i = 0; i < activeSessions.size(); i++) {
+            if(activeSessions.get(i).getSessionId().equals(sessionId)){
+                activeSessions.set(i, session);
+                System.out.println("Current Session "+ sessionId + " was replaced");
+            }
+        }
     }
 
     public Session getActiveSession(UUID sessionId){
@@ -102,6 +175,7 @@ public class SessionService {
         sessionsCounter = null;
         return counter;
     }
+
     //Diese Methode soll verwendet werden um der Session einen zweiten Spieler hinzuzufügen
     void editSession(UUID sessionId, User user){
         Session session = getSession(sessionId);

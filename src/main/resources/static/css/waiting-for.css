@@ -1,0 +1,47 @@
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html,body {
+    height: 100%;
+    overflow: hidden;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+
+h1{
+    color: #333;
+    font-size: 4em;
+    text-align: center;
+    size: 1em;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+
+#welcome{
+    color: #333;
+    font-size: 2em;
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+
+#sessionId{
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+#session-content{
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+
+h2{
+    text-align: center;
+    font-size: 10em;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

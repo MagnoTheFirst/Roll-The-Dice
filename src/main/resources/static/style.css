@@ -11,8 +11,10 @@ body {
 h1 {
     margin: 20px;
     font-size: 6rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: rgb(208, 214, 218);
 }
+
 
 .dice-area {
     margin: 0px 50px;
@@ -29,6 +31,7 @@ h1 {
 p {
     font-size: 2.5rem;
     color: rgb(208, 214, 218);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 img {

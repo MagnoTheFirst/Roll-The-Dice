@@ -46,8 +46,9 @@ function getSessions(){
 
         div.innerHTML = 'Session: ' + sessionID;
         div1.innerHTML = 'Username: ' + user;
-        mainContainer.appendChild(div);
         mainContainer.appendChild(div1);
+        mainContainer.appendChild(div);
+
     }
 }
 

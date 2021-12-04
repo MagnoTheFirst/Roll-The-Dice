@@ -6,11 +6,12 @@
     <meta charset="UTF-8">
     <title>User Lobby</title>
     <link th:href="@{/css/chatstyle.css}" rel="stylesheet" />
+    <link th:href="@{/css/lobbby.css}" rel="stylesheet" />
 </head>
 
 <body th:action="@{/account1}" th:object="${user}" onload="connect1(), getSessions(), setEmailAsCookie()">
     <h1 class="hidden">Roll the Dice </h1>
-    <h2 id="welcome" th:text="'Hallo '+ ${user.firstname} + ' ' + ${user.lastname}"></h2>
+    <h2 id="welcome" th:text="'Hello '+ ${user.firstname} + ' ' + ${user.lastname}"></h2>
     <p id="email" th:text="${user.email}" class="hidden" >
         TEST
     </p>
@@ -18,16 +19,12 @@
         <h2>Scheint als ob der Browser kein JavaScript supported</h2>
     </noscript>
 
-
-    <div id="joinSession">
-        <h3>Join random session</h3>
-    </div>
-    <div id="createSession" onclick="redirectToWaitingFor()">
-        <h3>Create Session</h3>
-    </div>
     <div id="table">
         <h3> Sessions:</h3>
         <div></div>
+    </div>
+    <div id="createSession">
+        <button id="createButton" onclick="redirectToWaitingFor()">create session</button>
     </div>
 
     <div id="chat-container">

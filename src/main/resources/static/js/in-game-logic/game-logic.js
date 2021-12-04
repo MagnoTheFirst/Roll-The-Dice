@@ -14,7 +14,6 @@ function httpGet(url)
 
 
 function loadUser(){
-    alert(document.cookie);
     this.email =  document.cookie;
 }
 
@@ -38,7 +37,7 @@ function playerInfo1(){
     var session = getActiveSession(this.gameSessionId);
 
     someUserCheckedOut(session);
-
+    checkWhoWon( session.sessionId);
     var firstRandomNumber = session.score.score_player1;
     var secondRandomNumber = session.score.score_player2;
 
@@ -110,7 +109,7 @@ function startTimer() {
     timer = setInterval(function() {
         //playerInfo();
         playerInfo1();
-    }, 10000);
+    }, 5000);
 }
 
 function stopTimer() {
@@ -200,7 +199,6 @@ function quitSession(){
 }
 
 function quitSession1(){
-    alert(session.sessionId);
     var currentSession = getActiveSession(session.sessionId);
     var userEmail = document.cookie;
     if(currentSession.user1.email == email){
@@ -211,13 +209,33 @@ function quitSession1(){
         httpGet('http://localhost:8083/api/v1/leaveSession/'+ email+ "/" + currentSession.sessionId);
         window.location.href = "http://localhost:8083/account/lobby/" + email;
     }
-
 }
 
 function someUserCheckedOut(currentSession){
     if(currentSession.user1 == null || currentSession.user2 == null){
         alert("Your opponent has left the session you win");
+        httpGet('http://localhost:8083/api/v1/leaveSession/'+ email +"/" + currentSession.sessionId);
+        httpGet('http://localhost:8083/api/v1/clearSession/' + currentSession.sessionId);
+        httpGet('http://localhost:8083/api/v1/clearSession/' + currentSession.sessionId);
         window.location.href = "http://localhost:8083/account/lobby/" + email;
     }
 }
+
+function checkWhoWon(session){
+    var sessionInfo = session;
+    console.log(sessionInfo);
+    var winnerRound = sessionInfo.winnerRound;
+    var winnerMatch = sessionInfo.winnerMatch;
+
+    if(winnerMatch != null){
+        document.getElementById("winner title").innerHTML = "The winner of this match is " + winnerMatch;
+        alert("Thanks for playing roll the dice");
+        quitSession1();
+        //Add Method to diable roll the dice button and enable quit button
+    }
+    if(winnerRound != null){
+        document.getElementById("winner title").innerHTML = "The winner of this Round is " + winnerRound;
+    }
+}
+
 
